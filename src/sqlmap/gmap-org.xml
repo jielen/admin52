@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gmap-org">
+
+	<select id="getTreeNodesByParent" resultClass="hashmap" parameterClass="map">
+	 	select * from v_as_organization_tree_new where p_code = #parent# and (nd = #nd# or nd='0000')
+   	</select>
+  	
+  	<select id="getCompanyInfoByCode" resultClass="hashmap" parameterClass="map">
+	 	select ac.*, 
+	 	(select mc.co_name from ma_company mc where ac.parent_co_code = mc.co_code and mc.nd=#nd#) parent_co_name,
+	 	(select opt_val from as_option where opt_id='OPT_CO_CODE') as opt_co_code
+	 		from ma_company ac 
+	 	where ac.co_code=#coCode# and ac.nd=#nd#
+   	</select>
+   	
+   	<select id="getOptCoCodeInfo" resultClass="hashmap" parameterClass="map">
+	 	select opt_val as OPT_CO_CODE from as_option where opt_id='OPT_CO_CODE'
+   	</select>
+   	
+   	<select id="getOrgInfoByCode" resultClass="hashmap" parameterClass="map">
+	 	select ao.*,
+		       (select mc.co_name from ma_company mc where mc.co_code = ao.co_code and mc.nd=#nd#) as co_name,
+		       (select aor.org_name
+		          from as_org aor
+		         where aor.co_code = ao.parent_org_code) as parent_org_name
+		  from as_org ao
+		  where ao.nd=#nd#
+		  and ao.org_code = #orgCode#
+   	</select>
+   	
+   	<select id="getEmpInfoByCode" resultClass="hashmap" parameterClass="map">
+	 	select * from as_emp where emp_code=#empCode#
+   	</select>
+   	
+   	<select id="getOrgPosiInfo" resultClass="hashmap" parameterClass="map">
+	 	select aop.posi_code as posi_code,
+		       ap.posi_name as posi_name
+		  from as_org_position aop, as_position ap
+		 where aop.posi_code = ap.posi_code
+		   and co_code = #coCode#
+		   and org_code = #orgCode#
+		   and nd = #nd#
+		   and ap.posi_code != '-1'
+   	</select>
+   	
+   	<select id="getEmpPosiInfo" resultClass="hashmap" parameterClass="map">
+	 	select aep.posi_code as posi_code,
+		       ap.posi_name as posi_name
+		  from as_emp_position aep, as_position ap
+		 where aep.posi_code = ap.posi_code
+		   and co_code = #coCode#
+		   and org_code = #orgCode#
+		   and emp_code = #empCode#
+		   and nd = #nd#
+		   and aep.posi_code != '-1'
+   	</select>
+   	
+   	<select id="getPosiInfoByCode" resultClass="hashmap" parameterClass="map">
+	 	select * from as_position where posi_code=#posiCode# and posi_code != '-1' order by posi_code
+   	</select>
+   	
+   	<select id="getOrgCompanyList" resultClass="hashmap" parameterClass="map">
+	 	select co_code, co_name from ma_company where f_co_code=#fCoCode# and f_org_code=#fOrgCode# and nd=#nd#
+   	</select>
+   	
+   	<select id="getCompanyList" resultClass="hashmap" parameterClass="map">
+   		<![CDATA[
+	 	select co_code, co_name from ma_company where nd=#nd# and co_type_code <> '01' order by co_code
+	 	]]>
+   	</select>
+   	
+   	<insert id="insertCompanyInfo" parameterClass="map">
+	 	insert into ma_company
+			  (co_code,
+			   co_name,
+			   co_fullna,
+			   is_lowest,
+			   trade_name,
+			   bank_acc,
+			   corp_repr,
+			   comm_addr,
+			   post_code,
+			   shop_card_no,
+			   link_man,
+			   loca_tele,
+			   co_type_code,
+			   co_kind,
+			   fina_level,
+			   is_used,
+			   parent_co_code,
+			   nd,
+			   quic_code,
+			   mark,
+			   trans_date)
+			values
+			  (#coCode#,
+			   #coName#,
+			   #coFullNa#,
+			   #isLowest#,
+			   #tradeName#,
+			   #bankAcc#,
+			   #corpRepr#,
+			   #commAddr#,
+			   #postCode#,
+			   #shopCardNo#,
+			   #linkMan#,
+			   #locaTele#,
+			   #coTypeCode#,
+			   #coKind#,
+			   #finaLevel#,
+			   #isUsed#,
+			   #parentCode#,
+			   #nd#,
+			   #quicCode#,
+			   #mark#,
+			   sysdate)
+   	</insert>
+   	
+   	<insert id="insertOrgInfo" parameterClass="map">
+	 	insert into as_org(org_code, org_name, parent_org_code, co_code, is_lowest, quic_code, linkman, tele, nd, trans_date)
+  			values (#orgCode#, #orgName#, #parentOrgCode#, #coCode#, #isLowest#, #quicCode#, #linkMan#, #tele#, #nd#, sysdate)
+   	</insert>
+   	
+   	<insert id="insertDefaultEmpPosiInfo" parameterClass="map">
+	 	insert into as_emp_position (emp_code, posi_code, org_code, co_code, emp_posi_id, nd, trans_date)
+       		values(#empCode#, #posiCode#, #orgCode#, #coCode#, #empPosiId#, #nd#, sysdate)
+   	</insert>
+   	
+   	<insert id="insertEmpInfo" parameterClass="map">
+	 	insert into as_emp(emp_code, emp_name, sex, phone, email, identity_card, is_login, user_id, ca_serial, trans_date)
+       		values(#empCode#, #empName#, #sex#, #tele#, #email#, #idCard#, #isUsed#, #userId#, #caSerial#, sysdate)
+   	</insert>
+   	
+   	<insert id="insertUserInfo" parameterClass="map">
+	 	insert into as_user(user_id, user_name, cookie, modi_time)
+       values(#userId#, #empName#, #cookie#, sysdate)
+   	</insert>
+   	
+   	<insert id="insertPosiInfo" parameterClass="map">
+	 	insert into as_position(posi_code, posi_name, trans_date) values(#posiCode#, #posiName#, sysdate)
+   	</insert>
+   	
+   	<update id="updateCompanyInfo" parameterClass="map">
+	 	update ma_company
+		   set co_name        = #coName#,
+		       is_lowest      = #isLowest#,
+		       trade_name     = #tradeName#,
+		       bank_acc       = #bankAcc#,
+		       corp_repr      = #corpRepr#,
+		       comm_addr      = #commAddr#,
+		       post_code      = #postCode#,
+		       link_man       = #linkMan#,
+		       loca_tele      = #locaTele#,
+		       co_type_code   = #coTypeCode#,
+		       co_kind        = #coKind#,
+		       fina_level     = #finaLevel#,
+		       is_used        = #isUsed#,
+		       parent_co_code = #parentCode#
+		       quic_code      = #quicCode#,
+		       mark           = #mark#
+		 where co_code = #coCode#
+		 		nd  = #nd#
+   	</update>
+   	
+   	<update id="updateOrgInfo" parameterClass="map">
+	 	update as_org
+		   set org_name        = #orgName#,
+		       parent_org_code = #parentOrgCode#,
+		       is_lowest       = #isLowest#,
+		       quic_code       = #quicCode#,
+		       linkman         = #linkMan#,
+		       tele            = #tele#
+		 where org_code = #orgCode#
+		  and co_code = #coCode#
+		  and  nd = #nd#
+   	</update>
+   	
+   	<update id="updateEmpInfo" parameterClass="map">
+	 	update as_user set user_id=#userId#, user_name = #empName#, modi_time = sysdate where user_id= #userId#
+   	</update>
+   	
+   	<update id="updateUserInfo" parameterClass="map">
+	 	update as_emp
+		   set emp_name      = #empName#,
+		       sex           = #sex#,
+		       phone         = #tele#,
+		       email         = #email#,
+		       identity_card = #idCard#,
+		       is_login      = #isUsed#,
+		       ca_serial     = #caSerial#,
+		       user_id       = #userId#,
+		       trans_date    = sysdate
+		 where emp_code = #empCode#
+   	</update>
+   	
+   	<update id="updatePosiInfo" parameterClass="map">
+	 	update as_position
+		   set posi_name = #posiName#, trans_date = sysdate
+		 where posi_code = #posiCode#
+   	</update>
+   	
+   	<update id="updateOrgCompanyInfo" parameterClass="map">
+	 	update ma_company
+		   set f_co_code = #fCoCode#, f_org_code = #fOrgCode#
+		 where 
+			 co_code in 
+			 <iterate property="list" open="(" close=")" conjunction=",">       
+				#list[]#
+			 </iterate>
+			 and nd = #nd#
+   	</update>
+   	
+   	<update id="deleteOrgCompanyInfoByCode" parameterClass="map">
+	 	update ma_company
+		   set f_co_code = '', f_org_code = ''
+		 where 
+		 	f_co_code = #fCoCode#
+		 	and f_org_code = #fOrgCode#
+			and nd = #nd#
+   	</update>
+   	
+   	<delete id="deleteCompanyInfo" parameterClass="map">
+	 	delete from ma_company where co_code=#coCode# and nd=#nd#
+   	</delete>
+   	
+   	<delete id="deleteOrgInfo" parameterClass="map">
+	 	 delete from as_org 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic> 
+   	</delete>
+   	
+   	<delete id="deleteEmpInfo" parameterClass="map">
+	 	 delete from as_emp where emp_code = #empCode#
+   	</delete>
+   	
+   	<delete id="deleteUserInfo" parameterClass="map">
+	 	 delete from as_user where user_id = #userId#
+   	</delete>
+   	
+   	<delete id="deletePosiInfo" parameterClass="map">
+	 	 delete from as_position where posi_code = #posiCode#
+   	</delete>
+   	
+   	<delete id="deleteOrgPosiInfo" parameterClass="map">
+	 	 delete from as_org_position 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="posiCode">
+  				posi_code=#posiCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic> 
+   	</delete>
+   	
+   	<delete id="deleteEmpPosiInfo" parameterClass="map">
+	 	 delete from as_emp_position 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="posiCode">
+  				posi_code=#posiCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="empCode">
+  				emp_code=#empCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic> 
+   	</delete>
+   	
+   	<delete id="deleteEmpPrivInfo" parameterClass="map">
+	 	 delete from as_user_func 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				user_id=#userId#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				compo_id=#compoId#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="posiCode">
+  				func_id=#funcId#
+  			</isNotNull>
+  		</dynamic> 
+   	</delete>
+   	
+   	<delete id="deleteUserGroupInfo" parameterClass="map">
+	 	 delete from as_user_group 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				user_id=#userId#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				group_id=#groupId#
+  			</isNotNull>
+  		</dynamic> 
+   	</delete>
+   	
+   	<select id="getCompanyOrgCount" resultClass="hashmap" parameterClass="map">
+	 	select count(1) as count from as_org
+	 	<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic>
+   	</select>
+   	
+   	<select id="getOrgPosiCount" resultClass="hashmap" parameterClass="map">
+	 	select count(1) as count from as_org_position 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="posiCode">
+  				posi_code=#posiCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic> 
+   	</select>
+   	
+   	<select id="getEmpPosiCount" resultClass="hashmap" parameterClass="map">
+	 	select count(1) as count from as_emp_position 
+	 	 <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="coCode">
+  				co_code=#coCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="orgCode">
+  				org_code=#orgCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="posiCode">
+  				posi_code=#posiCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="empCode">
+  				emp_code=#empCode#
+  			</isNotNull>
+  			<isNotNull prepend="AND" property="nd">
+  				nd=#nd#
+  			</isNotNull>
+  		</dynamic> 
+   	</select>
+   	
+   	<select id="getNumLimCheckedType" resultClass="hashmap">
+	 	select TYPE_CODE, TYPE_NAME from AS_NUM_LIM_TYPE where upper(is_used)='Y'
+   	</select>
+   	
+   	<insert id="insertOrgPosiInfo" parameterClass="map">
+	 	insert into as_org_position(co_code, posi_code, org_code, nd, trans_date)
+       		values(#coCode#, #posiCode#, #orgCode#, #nd#, sysdate)
+   	</insert>
+   	
+   	<update id="saveCheckedNLTypeList"  parameterClass="map">
+		update as_num_lim_type set is_used = 'Y' where type_code in 
+		<iterate property="list" open="(" close=")" conjunction=",">       
+			         #list[]#
+		</iterate>
+   	</update>
+	
+	<update id="clearCheckedNLType"  parameterClass="map">
+		update as_num_lim_type set is_used = 'N' 
+   	</update>
+</sqlMap>

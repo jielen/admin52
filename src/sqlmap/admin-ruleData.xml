@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="admin-ruleData">
+
+	<select id="AS_GETUSER_AUTH" resultClass="hashmap"
+		parameterClass="map">
+		select a.COMPO_ID, b.RES_NA 部件名称, c.RES_NA 功能名称, a.CTRL_FIELD,
+		a.GRAN_RANGE, a.REVO_RANGE from as_user_num_lim a, as_lang_trans
+		b, as_lang_trans c where a.user_id=#user_id# and
+		a.compo_id=b.res_id and a.func_id=c.res_id union select
+		a.compo_id, b.res_na 部件名称, c.res_na 功能名称, ' ' ctrl_field, ' '
+		gran_range, ' ' revo_range from v_as_usr_func a, as_lang_trans
+		b, as_lang_trans c where user_id=#user_id# and
+		b.res_id=a.compo_id and c.res_id=a.func_id and compo_id not in
+		(select compo_id from as_user_num_lim where user_id=#user_id#)
+		and func_id not in (select func_id from as_user_num_lim where
+		user_id=#user_id#) union SELECT b.COMPO_ID, g.res_na 部件名称,
+		h.res_na 功能名称, ' ' ctrl_field, ' ' gran_range, ' ' revo_range
+		FROM AS_USER a, V_AS_ROLE_FUNC b, AS_EMP c, AS_EMP_POSITION d,
+		AS_POSI_ROLE e, AS_POSITION f, as_lang_trans g, as_lang_trans h
+		WHERE a.USER_ID = c.USER_ID AND c.EMP_CODE = d.EMP_CODE AND
+		e.ROLE_ID = b.ROLE_ID AND d.POSI_CODE = f.POSI_CODE AND
+		f.POSI_CODE = e.POSI_CODE and g.res_id=b.compo_id and
+		h.res_id=b.func_id and a.user_id=#user_id# order by compo_id
+	</select>
+	
+	<sql id="AS_ORGANIZATION_TREE_SQL">
+		select
+			CODE,NAME,
+			  case t.P_ORG_CODE 
+     			when ' ' then t.P_CODE
+     		  else t.P_ORG_CODE 
+     end as P_CODE,NORM_IMG,CO_CODE,ORG_CODE,P_ORG_CODE,POSI_CODE,EMP_CODE,ND
+		from V_AS_ORGANIZATION_TREE t where (ND = #svNd# or ND='0000') and
+			(P_CODE = #sCode# or t.P_ORG_CODE = #sCode#)
+			and t.P_CODE not in (select code
+                     	from v_as_organization_tree b
+                        where (b.ND = #svNd# or b.ND = '0000')
+                           and b.P_code =  #sCode#)
+    					   and t.P_ORG_CODE not in (select code
+                              from v_as_organization_tree b
+                              where (b.ND = #svNd# or b.ND = '0000')
+                              and b.P_code =  #sCode#)
+			
+	</sql>
+	<sql id="GET_FREE_POSITION_LIST" >
+		select 'free_position_group_20060626' || 'PO_' || POSI_CODE CODE,      
+       		'[' || POSI_CODE || '] ' || POSI_NAME NAME,    
+       		'free_position_group_20060626' P_CODE,    
+       		'/style/img/gp5/ico/position.gif' NORM_IMG,     
+       		'' CO_CODE,     
+       		'' ORG_CODE,     
+       		POSI_CODE POSI_CODE,     
+       		'' EMP_CODE,     
+       		'0000' ND
+  		from AS_POSITION
+ 		where POSI_CODE not in (select POSI_CODE from AS_ORG_POSITION WHERE ND = #svNd#)
+ 		order by posi_code
+	</sql>
+	<sql id="GET_FREE_EMP_LIST">
+		select 'free_employee_group_20060626' || 'EMP_' || EMP_CODE CODE,
+       		'[' || EMP_CODE || '] ' || EMP_NAME NAME,
+       		'free_employee_group_20060626' P_CODE,
+       		'/style/img/gp5/ico/employee.gif' NORM_IMG,
+       		'' CO_CODE,
+       		'' ORG_CODE,
+       		'' POSI_CODE,
+       		EMP_CODE EMP_CODE,
+       		'0000' ND
+  		from AS_EMP
+ 		where EMP_CODE not in (select EMP_CODE from AS_EMP_POSITION where ND = #svNd#)
+ 		order by emp_code
+	</sql>
+	<select id="AS_ORGANIZATION_TREE" resultClass="hashmap"
+		parameterClass="map">
+		<isEqual property="sCode" compareValue="free_position_group_20060626">
+			<include refid="GET_FREE_POSITION_LIST"/>
+		</isEqual>
+		<isEqual property="sCode" compareValue="free_employee_group_20060626">
+			<include refid="GET_FREE_EMP_LIST"/>
+		</isEqual>
+		<isNotEqual property="sCode" compareValue="free_employee_group_20060626">
+			<isNotEqual property="sCode" compareValue="free_position_group_20060626">
+				<include refid="AS_ORGANIZATION_TREE_SQL"/>
+			</isNotEqual>
+		</isNotEqual>
+		<dynamic>
+			<isNotNull prepend="AND" property="isinrights">
+				CO_CODE in ($cocodes$) and ORG_CODE is null
+			</isNotNull>
+			<isNotNull prepend="AND" property="pOrgCode">
+				P_ORG_CODE = #pOrgCode#
+			</isNotNull>
+			<isNotNull prepend="AND" property="userId">
+				POSI_CODE in(select POSI_CODE from AS_POSI_ROLE where
+				ROLE_ID in ((select role_id from as_emp_role where
+				emp_code = #userId#) union (select pr.role_id from
+				as_posi_role pr,as_emp_position ep where
+				ep.posi_code=pr.posi_code and ep.emp_code= #userId#)))
+			</isNotNull>
+			<isNotNull prepend="AND" property="userCode">
+				POSI_CODE in(select POSI_CODE from AS_POSI_ROLE where
+				ROLE_ID in ((select role_id from as_emp_role where
+				emp_code = #userCode#) union (select pr.role_id from
+				as_posi_role pr,as_emp_position ep where
+				ep.posi_code=pr.posi_code and ep.emp_code=#userCode#)))
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="GET_OPT_CO_CODE" resultClass="hashmap"
+		parameterClass="map">
+		SELECT OPT_VAL FROM AS_OPTION where OPT_ID = #OPT_ID#
+		<dynamic>
+			<isNotNull prepend="AND" property="cocode">
+				CO_CODE = #cocode#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="MA_COMPANY_IsLowest" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(CO_CODE) ISLOWEST from MA_COMPANY
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="CO_CODE">
+				PARENT_CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="MA_COMPANY_IsOrg" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(CO_CODE) ISORG from AS_ORG where CO_CODE=#CO_CODE#
+		and ND=#ND#
+	</select>
+	<select id="MA_COMPANY_IsExist" resultClass="hashmap"
+		parameterClass="map">
+		SELECT CO_CODE, CO_NAME from MA_COMPANY where
+		CO_CODE=#PARENT_CO_CODE# and IS_LOWEST='N' and ND=#ND#
+	</select>
+	<select id="MA_COMPANY_IsAllowed" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(CO_CODE) ISALLOWED from MA_COMPANY
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="CO_CODE">
+				CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="AS_RULE_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(*) IS_USED from AS_COMPO where COMPO_ID=#COMPO_ID#
+		AND NO_FIELD IS NOT NULL
+	</select>
+	<select id="AS_ORG_IsExist" resultClass="hashmap"
+		parameterClass="map">
+		select ORG_CODE, ORG_NAME from AS_ORG where IS_LOWEST='N'
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="CO_CODE">
+				CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="PARENT_ORG_CODE">
+				ORG_CODE = #PARENT_ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="AS_ORG_IsLowest" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(ORG_CODE) ISLOWEST from AS_ORG where CO_CODE =
+		#CO_CODE# AND PARENT_ORG_CODE = #ORG_CODE#
+	</select>
+	<select id="AS_ORG_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(*) IS_COMPANY FROM AS_ORG
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="ND">
+				ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="AS_ORG_IsEmpPosi" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(ORG_CODE) ISEMPPOSI from AS_EMP_POSITION where
+		CO_CODE = #CO_CODE# AND ORG_CODE = #ORG_CODE#
+	</select>
+	<select id="AS_POSI_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(*) ISUSED from AS_ORG_POSITION where POSI_CODE =
+		#POSI_CODE#
+	</select>
+	<select id="AS_POSI_IsExist" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(*) ISEXIST from AS_POSITION where POSI_CODE =
+		#POSI_CODE#
+	</select>
+	<select id="GET_AS_USED_USER" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(*) USED FROM AS_EMP WHERE USER_ID = #USER_ID# AND
+		EMP_CODE != #EMP_CODE#
+	</select>
+	<select id="AS_EMP_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		SELECT COUNT(*) ISUSED FROM AS_EMP
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="EMP_NAME">
+				EMP_NAME = #EMP_NAME#
+			</isNotNull>
+			<isNotNull prepend="AND" property="EMP_CODE">
+				EMP_CODE = #EMP_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="AS_ROLE_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(ROLE_ID) ISUSED from AS_POSI_ROLE where ROLE_ID =
+		#ROLE_ID#
+	</select>
+	<select id="AS_ROLE_IsSetRights" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(ROLE_ID) IsSetRights from V_AS_ROLE_FUNC where ROLE_ID =
+		#ROLE_ID#
+	</select>
+	<select id="AS_NUMTOOL_IsUsed" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(*) IS_USED from AS_NO_RULE where
+		NUM_TOOL_ID=#NUM_TOOL_ID#
+	</select>
+	<select id="AS_USER_IsExist" resultClass="hashmap"
+		parameterClass="map">
+		select COUNT(*) ISEXIST from AS_USER where USER_ID=#USER_ID#
+	</select>
+	<select id="AS_COMPO_Table" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER_TAB_ID from as_compo where compo_id=#COMPO_ID#
+	</select>
+	<select id="AS_FILEIMP_FIELD" resultClass="hashmap"
+		parameterClass="map">
+		select atl.DATA_ITEM as FIELD, alt.RES_NA as
+		FIELDNAME,atl.ORD_INDEX as FIELD_FILE_COL from as_tab_col atl,
+		as_lang_trans alt where atl.DATA_ITEM = alt.RES_ID and
+		atl.TAB_ID=#table#
+	</select>
+	<select id="AS_FILE_EXP_GETVSTab" resultClass="hashmap"
+		parameterClass="map">
+		select atab.TAB_ID, trans.RES_NA from as_compo ac, as_table atab, as_lang_trans trans where ac.compo_id=#COMPO_ID# and ac.master_tab_id=atab.master_tab_id and trans.res_id=atab.tab_id
+		union
+		select ac.MASTER_TAB_ID, trans.RES_NA from as_compo ac, as_table atab, as_lang_trans trans where ac.compo_id=#COMPO_ID# and trans.res_id = ac.master_tab_id
+	</select>
+	<select id="AS_FILE_EXP_GETVSField" resultClass="hashmap"
+		parameterClass="map">
+		select cols.DATA_ITEM, trans.RES_NA from as_tab_col cols, as_lang_trans trans where tab_id=#TAB_ID# and trans.res_id=cols.DATA_ITEM
+	</select>
+	<select id="GET_GROUP_BY_POSICODE" resultClass="hashmap"
+		parameterClass="map">
+		SELECT GROUP_ID, GROUP_NAME FROM AS_GROUP WHERE GROUP_ID IN
+		(SELECT GROUP_ID FROM AS_ROLE_GROUP WHERE ROLE_ID IN (SELECT
+		ROLE_ID FROM AS_POSI_ROLE
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="POSI_CODE">
+				POSI_CODE IN
+				<iterate open="(" close=")" conjunction=","
+					property="POSI_CODE">
+					#POSI_CODE[]#
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		))
+	</select>
+	<select id="getPortletInfo" resultClass="hashmap" parameterClass="map">
+		select PORTLET_URL, PORTLET_CLASS, PORTLET_MORE_URL, PORTLET_DETAIL_URL, PORTLET_ID, PORTLET_NAME from ap_portlet
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="portletType">
+				PORTLET_TYPE = #portletType#
+			</isNotNull>
+			<isNotNull prepend="AND" property="IS_SYSTEM">
+				IS_SYSTEM = #IS_SYSTEM#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getHasPortletInfo" resultClass="hashmap" parameterClass="map">
+		select * from ap_article_portlet
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="articleId">
+				ARTICLEID = #articleId#
+			</isNotNull>
+			<isNotNull prepend="AND" property="portletId">
+				PORTLETID = #portletId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="PRODUCT_PORTAL_Version" resultClass="hashmap" parameterClass="map">
+		select version from as_product_ver where product_code='portal'
+	</select>
+	<select id="AS_USER_STATINFO" resultClass="hashmap" parameterClass="map">
+		select ID, USER_ID, IP_ADDRESS, MAC_ADDRESS, LOGIN_TIME, LOGOUT_TIME from as_statinfo 
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="user_id">
+				user_id=#user_id#
+			</isNotNull>
+			<isNotNull prepend="AND" property="login_min">
+				to_date(login_time, 'YYYY-MM-DD HH24:MI:SS') between to_date(#login_min#, 'YYYY-MM-DD HH24:MI:SS') and to_date(#login_max#, 'YYYY-MM-DD HH24:MI:SS')
+			</isNotNull>
+		</dynamic>
+			order by LOGIN_TIME desc, USER_ID
+	</select>
+	
+	<select id="SELECT_AS_ADMIN_USERID" resultClass="hashmap" parameterClass="map">
+		select count(*) from as_admin where user_id=#user_id#
+	</select>
+</sqlMap>

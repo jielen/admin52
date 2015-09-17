@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gmap-func-priv">
+
+	<select id="getUserPrivTreeNodesByParent" resultClass="hashmap" parameterClass="map">
+		select * from 
+		(select va.*, 'ALL' as priv_type, 'false' as has_check from v_ap_menu_tree va
+		union all
+		select distinct v.func_id as code,
+		       (select af.func_desc from as_func af where af.func_id = v.FUNC_ID) as name,
+		       v.COMPO_ID as parent,
+           v.PRIV_TYPR as priv_type,
+		       'true' as has_check
+		  from v_as_user_func v
+		  where v.USER_ID=#userId#)
+		where parent=#parent#
+   	</select>
+   	
+   	<select id="getleftPrivTreeNodesByParent" resultClass="hashmap" parameterClass="map">
+		select * from 
+		(select va.*, 'false' as has_check from v_ap_menu_tree va
+		union all
+		select distinct acf.func_id as code,
+	       (select af.func_desc from as_func af where af.func_id = acf.func_id) as name,
+	       acf.compo_id as parent,
+	       'true' as has_check
+		  from as_compo_func acf
+		 where not exists (select *
+		          from v_as_user_func v
+		         where v.COMPO_ID = acf.compo_id
+		           and v.FUNC_ID = acf.func_id
+		           and v.USER_ID = #userId#))
+		where parent=#parent#
+   	</select>
+   	
+   	<select id="getPosiPrivTreeNodesByParent" resultClass="hashmap" parameterClass="map">
+		select * from 
+		(select va.*, 'ALL' as priv_type, 'false' as has_check from v_ap_menu_tree va
+		union all
+		select distinct ar.func_id as code,
+		       (select af.func_desc from as_func af where af.func_id = ar.FUNC_ID) as name,
+		       ar.COMPO_ID as parent,
+           'POSI' as priv_type,
+		       'true' as has_check
+		  from as_role_func ar
+		  where ar.role_id=#posiCode#)
+		where parent=#parent#
+   	</select>
+   	
+   	<select id="getleftPosiPrivTreeNodesByParent" resultClass="hashmap" parameterClass="map">
+		select * from 
+		(select va.*, 'false' as has_check from v_ap_menu_tree va
+		union all
+		select distinct acf.func_id as code,
+	       (select af.func_desc from as_func af where af.func_id = acf.func_id) as name,
+	       acf.compo_id as parent,
+	       'true' as has_check
+		  from as_compo_func acf
+		 where not exists (select *
+		          from as_role_func v
+		         where v.COMPO_ID = acf.compo_id
+		           and v.FUNC_ID = acf.func_id
+		           and v.ROLE_ID = #posiCode#))
+		where parent=#parent#
+   	</select>
+   	
+   	<select id="getTreeRootData" resultClass="hashmap" parameterClass="map">
+		select menu_id as code, menu_name as name, 'false' as has_check from ap_menu where menu_id=#rootCode#
+   	</select>
+  	
+  	<select id="getUserGroup" resultClass="hashmap" parameterClass="map">
+		select * from as_group
+   	</select>
+   	
+   	<select id="getGroupPages" resultClass="hashmap" parameterClass="map">
+		select page_id, page_title from ap_group_page where group_id=#groupId# and menu_orient is not null
+   	</select>
+   	
+   	<insert id="insertUserFunc" parameterClass="map">
+		insert into as_user_func(user_id, compo_id, func_id) values (#keyCode#, #compoId#, #funcId#)
+   	</insert>
+   	
+   	<delete id="deleteUserFunc" parameterClass="map">
+		delete from as_user_func where user_id=#keyCode# and compo_id=#compoId# and func_id=#funcId#
+   	</delete>
+   	
+   	<insert id="insertPosiFunc" parameterClass="map">
+		insert into as_role_func(role_id, compo_id, func_id) values (#keyCode#, #compoId#, #funcId#)
+   	</insert>
+   	
+   	<delete id="deletePosiFunc" parameterClass="map">
+		delete from as_role_func where role_id=#keyCode# and compo_id=#compoId# and func_id=#funcId#
+   	</delete>
+</sqlMap>

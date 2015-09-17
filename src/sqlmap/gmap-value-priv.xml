@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gmap-value-priv">
+
+	<select id="getCompanyRightPrivList" resultClass="hashmap" parameterClass="map">
+		select distinct ma1.co_code, ma1.co_type_code, ma1.co_name as name, ma1.co_fullna 
+		from ma_company ma1, ma_user_num_lim ma2
+		where ma1.co_code = ma2.code 
+		and ma1.nd = #nd#
+		and ma2.user_id = #userId#
+		and ma2.ctrl_field = 'CO_CODE'
+		and ma1.co_type_code != '01'
+		order by ma1.co_code
+   	</select>
+	
+	<select id="getCompanyLeftPrivList" resultClass="hashmap" parameterClass="map">
+		select distinct ma1.co_code, ma1.co_type_code, ma1.co_name as name, ma1.co_fullna 
+    	from ma_company ma1
+    	where not exists
+    	( select 1 from ma_user_num_lim ma2
+   	 	where ma1.co_code = ma2.code
+    	and ma2.ctrl_field = 'CO_CODE'
+    	and ma2.user_id = #userId#)
+		and ma1.nd = #nd#
+		and ma1.co_type_code != '01'
+		order by ma1.co_code
+   	</select>
+   	
+   	<select id="getOrgLeftPrivList" resultClass="hashmap" parameterClass="map">
+		select * from (select ao.org_code as org_code, ao.org_name as name, ao.co_code as co_code
+		  from as_org ao, ma_company mc
+		 where ao.nd = mc.nd
+		   and ao.nd =#nd#
+		   and ao.co_code = mc.co_code
+		   and mc.co_type_code = '01') a where not exists(select 1 from ma_user_num_lim mu
+		 where mu.ctrl_field = 'ORG_CODE'
+		   and mu.user_id = #userId#
+		   and mu.code = a.org_code)
+		   order by co_code, org_code
+   	</select>
+   	
+   	<select id="getOrgRightPrivList" resultClass="hashmap" parameterClass="map">
+		select  ao.org_code as org_code, ao.org_name as name, ao.co_code as co_code
+		  from ma_user_num_lim mu, as_org ao
+		 where mu.ctrl_field = 'ORG_CODE'
+		   and mu.user_id = #userId#
+		   and mu.code = ao.org_code
+		   and ao.nd = #nd#
+		   order by co_code, org_code
+   	</select>
+</sqlMap>

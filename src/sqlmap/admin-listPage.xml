@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="admin-listPage">
+
+	<select id="getDataFromAS_NO_RULE" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_NO_RULE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="statusbox1">
+				MASTER.RULE_CODE = #statusbox1#
+			</isNotNull>
+			<isNotNull prepend="AND" property="statusbox2">
+				MASTER.COMPO_ID = #statusbox2#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.rule_code like #matchCond# or MASTER.rule_name
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromMA_COMPANY" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from MA_COMPANY MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="CO_CODE">
+				MASTER.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				MASTER.ND = #ND#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.CO_CODE like #matchCond# or MASTER.CO_NAME like
+				#matchCond#)
+			</isNotNull>
+		</dynamic>
+		ORDER BY MASTER.CO_CODE
+	</select>
+	<select id="getDataFromAS_POSITION" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_POSITION MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="POSI_CODE">
+				MASTER.POSI_CODE=#POSI_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.POSI_CODE like #matchCond# or MASTER.POSI_NAME
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ORG" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.*, mc.CO_NAME from AS_ORG MASTER, MA_COMPANY mc
+		where MASTER.co_code = mc.co_code and mc.ND = #ND#
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="CO_CODE">
+				MASTER.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORG_CODE">
+				MASTER.ORG_CODE = #ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				MASTER.ND =#ND#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.CO_CODE like #matchCond# or MASTER.ORG_CODE like
+				#matchCond# or MASTER.ORG_NAME like #matchCond# or
+				mc.co_name like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_ROLE" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.ROLE_ID, MASTER.ROLE_NAME, MASTER.ROLE_DESC,
+			MASTER.CO_CODE, ac.CO_NAME as CO_NAME from AS_ROLE MASTER
+    		left join AS_COMPANY ac on MASTER.CO_CODE = ac.CO_CODE
+    		                          and ac.ND = #ND#
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="ROLE_ID">
+				MASTER.ROLE_ID =#ROLE_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.ROLE_ID like #matchCond# or MASTER.ROLE_NAME
+				like #matchCond#)
+			</isNotNull>
+			<isNotNull prepend="AND" property="CO_CODE">
+				(MASTER.CO_CODE = #CO_CODE# OR MASTER.CO_CODE = '*')
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_EMP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_EMP MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="EMP_CODE">
+				MASTER.EMP_CODE =#EMP_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.EMP_CODE like #matchCond# or MASTER.EMP_NAME
+				like #matchCond# or MASTER.CO_NAME like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_GROUP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_GROUP MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="GROUP_ID">
+				MASTER.GROUP_ID =#GROUP_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.GROUP_ID like #matchCond# or MASTER.GROUP_NAME
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_COMPO_NO" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.COMPO_ID, MASTER.COMPO_NAME, MASTER.NO_FIELD,
+		MASTER.WF_LIST_TYPE, MASTER.WF_FLOW_TYPE from AS_COMPO MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				MASTER.COMPO_ID =#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.COMPO_ID like #matchCond# or MASTER.COMPO_NAME
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_NUM_TOOL" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_NUM_TOOL MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="NUM_TOOL_ID">
+				MASTER.NUM_TOOL_ID =#NUM_TOOL_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.NUM_TOOL_ID like #matchCond# or
+				MASTER.NUM_TOOL_NAME like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_NUM_TOOL_RC" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_NO_RULE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				MASTER.COMPO_ID =#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				MASTER.RULE_CODE =#RULE_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.COMPO_ID like #matchCond# or MASTER.RULE_CODE
+				like #matchCond# or MASTER.RULE_NAME like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_VALSET" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_VALSET MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="VALSET_ID">
+				MASTER.VALSET_ID =#VALSET_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.VALSET_ID like #matchCond# or MASTER.VALSET_NAME
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_IP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_IP MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="GRANT_IP">
+				MASTER.GRANT_IP =#GRANT_IP#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.GRANT_IP like #matchCond# or MASTER.USER_ID like
+				#matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PUBLISH_CONTENT" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_PUBLISH_CONTENT MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="SID">
+				MASTER.SID =#SID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				MASTER.SID like #matchCond#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_FILE_EXP MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				MASTER.COMPO_ID =#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				MASTER.COMPO_ID like #matchCond#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP_NAME_RULE" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_NO_RULE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="statusbox1">
+				MASTER.RULE_CODE = #statusbox1#
+			</isNotNull>
+			<isNotNull prepend="AND" property="statusbox2">
+				MASTER.COMPO_ID = #statusbox2#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.rule_code like #matchCond# or MASTER.rule_name
+				like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILEIMP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_FILEIMP_STYLE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="FIMP_ID">
+				MASTER.FIMP_ID =#FIMP_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.FIMP_ID like #matchCond# or MASTER.FIMP_NAME
+				like #matchCond# or MASTER.FIMP_TABLE like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_LOG" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_LOG MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="GUID">
+				MASTER.GUID =#GUID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.GUID like #matchCond# or MASTER.USER_ID like
+				#matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_DESKTOP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.*,adi.IMG_NAME from AS_DESKTOP
+		MASTER,AS_DESKTOP_IMG adi where MASTER.AREA_IMG=adi.FILE_ID
+		<dynamic>
+			<isNotNull prepend="AND" property="AREA_ID">
+				MASTER.AREA_ID =#AREA_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="USER_ID">
+				MASTER.USER_ID =#USER_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.AREA_ID like #matchCond# or MASTER.USER_ID like
+				#matchCond# or MASTER.AREA_NAME like #matchCond# or
+				adi.IMG_NAME like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PRINT_JASPERTEMP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_PRINT_JASPERTEMP MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="PRN_COMPO_ID">
+				MASTER.PRN_COMPO_ID=#PRN_COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="PRN_TPL_JPCODE">
+				MASTER.PRN_TPL_JPCODE=#PRN_TPL_JPCODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.PRN_COMPO_ID like #matchCond# or
+				MASTER.PRN_TPL_JPCODE like #matchCond# or
+				MASTER.PRN_TPL_NAME like #matchCond#)
+			</isNotNull>
+			<isNotNull prepend="AND" property="CO_CODE">
+				(MASTER.CO_CODE = #CO_CODE# OR MASTER.CO_CODE = '*')
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromWF_WATCH" resultClass="hashmap"
+		parameterClass="map">
+		select a.INSTANCE_ID as WF_INSTANCE_ID, a.NAME as
+		WF_INSTANCE_NAME, b.TEMPLATE_ID as WF_TEMPLATE_NAME,
+		b.create_staff_id as WF_INSTANCE_OWNER, (case when a.status =
+		'1' then '活动' else '中止' end) as WF_INSTANCE_STATUS,
+		a.start_time as WF_INSTANCE_START_TIME,
+		(case when a.end_time = '00000000000000' then '' else
+		a.end_time end) as WF_INSTANCE_END_TIME from
+		wf_instance a, wf_template b where a.template_id = b.template_id
+		<dynamic>
+			<isNotNull prepend="AND" property="matchCond">
+				a.name like #matchCond# or b.name like #matchCond#
+			</isNotNull>
+			<isNotNull prepend="AND" property="templatename">
+				<isNotEqual property="templatename" compareValue="-1">
+					b.template_id = #templatename#
+				</isNotEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ARTICLE" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.ID, MASTER.TITLE, MASTER.CREATOR, MASTER.PUBTIME,
+			MASTER.TYPE from AP_ARTICLE MASTER 
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="ID">
+				MASTER.ID=#ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.ID like #matchCond# or MASTER.TITLE like
+				#matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PORTLET" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AP_PORTLET MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="PORTLET_ID">
+				MASTER.PORTLET_ID=#PORTLET_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.PORTLET_ID like #matchCond# or
+				MASTER.PORTLET_NAME like #matchCond# or
+				MASTER.PORTLET_DESC like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PORTLET_forPublish" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.PORTLET_ID, MASTER.PORTLET_NAME, MASTER.PORTLET_DESC from AP_PORTLET MASTER
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="PORTLET_ID">
+				MASTER.PORTLET_ID=#PORTLET_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="PORTLET_TYPE">
+				MASTER.PORTLET_TYPE=#PORTLET_TYPE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.PORTLET_ID like #matchCond# or
+				MASTER.PORTLET_NAME like #matchCond# or
+				MASTER.PORTLET_DESC like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_UPLOAD" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_UPLOAD MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="FILE_ID">
+				MASTER.FILE_ID=#FILE_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="matchCond">
+				(MASTER.FILE_ID like #matchCond# or
+				MASTER.FILE_NAME like #matchCond# or
+				MASTER.FILE_DESC like #matchCond#)
+			</isNotNull>
+		</dynamic>
+	</select>		
+</sqlMap>

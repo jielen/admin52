@@ -1,0 +1,260 @@
+<!DOCTYPE xwork PUBLIC
+    "-//OpenSymphony Group//XWork 1.0//EN"
+    "http://www.opensymphony.com/xwork/xwork-1.0.dtd"
+ >
+
+<xwork>
+	<package name="xwork-admin" extends="xwork-gmap">
+		<action name="getpage_AS_NO_RULE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_NO_RULE_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_NO_RULE_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>		
+		<action name="getpage_MA_COMPANY" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/MA_COMPANY_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/MA_COMPANY_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>	
+		<action name="getpage_AS_POSITION" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_POSITION_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_POSITION_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>	
+		<action name="getpage_AS_ORG" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_ORG_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ORG_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>	
+		<action name="getpage_AS_ROLE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_ROLE_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ROLE_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="deleteRoleRelation" class="deleteRoleRelation">
+			<result name="success" type="stream">
+			</result>
+		</action>	
+		<action name="getpage_AS_EMP" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_EMP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_EMP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+        <action name="deleteEmpRelation" class="deleteEmpRelation">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<action name="getpage_AS_GROUP" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_GROUP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_GROUP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>	
+		<action name="getpage_AS_COMPO_NO" class="pageDispatcherAction">
+			
+			<result name="list" type="dispatcher">/jsp/admin/AS_COMPO_NO_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_COMPO_NO_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_NUM_TOOL" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_NUM_TOOL_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_NUM_TOOL_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_NUM_TOOL_RC" class="pageDispatcherAction">
+			
+			<result name="list" type="dispatcher">/jsp/admin/AS_NUM_TOOL_RC_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_NUM_TOOL_RC_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_VALSET" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_VALSET_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_VALSET_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_PRINT_JASPERTEMP" class="pageDispatcherAction">
+			
+			<result name="list" type="dispatcher">/jsp/admin/AS_PRINT_JASPERTEMP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_PRINT_JASPERTEMP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_IP" class="pageDispatcherAction">
+			
+			<result name="list" type="dispatcher">/jsp/admin/AS_IP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_IP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_PUBLISH_CONTENT" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_PUBLISH_CONTENT_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_PUBLISH_CONTENT_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+	
+		<action name="getpage_AS_FILE_EXP" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_FILE_EXP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_FILE_EXP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_FILE_EXP_NAME_RULE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_FILE_EXP_NAME_RULE_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_FILE_EXP_NAME_RULE_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_FILEIMP" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_FILEIMP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_FILEIMP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_LOG" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_LOG_List.jsp</result>		
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_DESKTOP" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_DESKTOP_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_DESKTOP_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_WF_WATCH" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_WF_WATCH_List.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_WF_BJ_DEFINE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/BusinessSuperSet.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_AUTHPRT" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/AS_AUTHPRT_Edit.jsp</result>		
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_NEW" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/AS_NEW.jsp</result>		
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_PRECOL" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_PRECOL.jsp</result>		
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_WF_WATCH" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_WF_WATCH_List.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_WF_BJ_DEFINE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/BusinessSuperSet.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>	
+		<action name="getpage_AS_STATINFO" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/online.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+	  	<action name="getpage_AS_UPLOAD_LICENSE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_UPLOAD_LICENSE.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+	  	</action>		
+	  	<action name="getpage_AS_SYS_OPT" class="pageDispatcherAction">
+			<result name="edit" type="dispatcher">/jsp/admin/AS_SYS_OPT_Edit.jsp</result>		
+			<result name="error" type="redirect">error.jsp</result>
+		</action>		
+		<action name="getpage_AS_COMPANY_OPT" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/AS_COMPANY_OPT_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+	  </action>
+	  <action name="getpage_AS_ORGANIZATION_TREE" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ORGTREE_Main.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+	  </action>
+	  <action name="getpage_AS_ADMIN" class="pageDispatcherAction">			
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ADMIN_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+	  </action>
+	  <action name="getAdminPath" class="getAdminPath">
+			<result name="success" type="dispatcher">/jsp/admin/AS_ORGTREE_Edit.jsp</result>
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_MAIL_OPT" class="pageDispatcherAction">
+			<result name="edit" type="dispatcher">/jsp/admin/AS_MAIL_OPT_Edit.jsp</result>
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+
+	   	<!-- workflow designer -->
+		<action name="getpage_WF_DEFINE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_WF_DEFINE_List.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+	   	<action name="desktopBatch" class="desktopBatch">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<!--portlet-->
+		<action name="getpage_AS_ARTICLE" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_ARTICLE_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ARTICLE_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="articleContent" class="articleContent">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<action name="saveArticle" class="saveArticle">
+			<result name="success" type="dispatcher">/jsp/platform/information.jsp
+			</result>
+		</action>
+		<action name="deleteArticle" class="deleteArticle">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<action name="getpage_AS_PORTLET" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_PORTLET_List.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_PORTLET_Edit.jsp</result>			
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_BASIC_CARRY_FORWARD" class="pageDispatcherAction">			
+			<result name="list" type="dispatcher">/jsp/admin/AS_BASIC_INFORMATION_CARRY_FORWARD.jsp</result>
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="savePrecolAction" class="savePrecolAction">
+			<result name="success" type="dispatcher">/jsp/admin/AS_PRECOL_main.jsp</result>		
+		</action>		
+		<action name="carryBasicInformation" class="carryBasicInformation">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<action name="delGroupRelation" class="delGroupRelation">
+			<result name="success" type="stream">
+			</result>
+		</action>
+		<action name="publishArticle" class="publishArticle">
+			<result name="success" type="stream">
+			</result>
+		</action>	
+		<action name="getpage_AS_ENCRYPTION_SERVICE" class="pageDispatcherAction">
+			<result name="list" type="dispatcher">/jsp/admin/AS_ENCRYPTION_SERVICE.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/AS_ENCRYPTION_SERVICE.jsp</result>
+		</action>		
+		<action name="getpage_AS_KEY_TOOLS" class="pageDispatcherAction">
+			<result name="list" type="dispatcher">/jsp/admin/keyTools.jsp</result>
+			<result name="edit" type="dispatcher">/jsp/admin/keyTools.jsp</result>
+		</action>
+		<action name="getpage_AS_UPLOAD" class="pageDispatcherAction">
+			<result name="list" type="dispatcher">/jsp/admin/AS_UPLOAD_List.jsp</result>
+			<result name="error" type="redirect">error.jsp</result>
+		</action>
+		<action name="getpage_AS_USER_STATINFO" class="pageDispatcherAction">
+			<result name="edit" type="dispatcher">/jsp/admin/AS_USER_STATINFO.jsp</result>
+		</action>
+		<action name="getpage_AS_SYS_INSTALL" class="pageDispatcherAction">
+			<result name="edit" type="dispatcher">/jsp/admin/AS_SYS_INSTALL.jsp</result>
+		</action>
+		<action name="resourceDelete" class="resourceDeleteAction">		
+			<result name="success" type="stream"></result>			
+		</action>
+		<action name="saveAsCa" class="saveAsCa">
+			<result name="success" type="stream">
+			</result>	
+		</action>								
+		<action name="upgradeKeyInfo" class="upgradeKeyInfoAction">		
+			<result name="success" type="stream"></result>			
+		</action>					
+		<action name="getServerInfo" class="getServerInfoAction">		
+			<result name="success" type="stream"></result>
+			<interceptor-ref name="basicStack"/>			
+		</action>					
+	</package>
+</xwork>

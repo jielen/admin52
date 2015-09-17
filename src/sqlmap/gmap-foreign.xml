@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gmap-foreign">
+
+	<select id="getCompanyForeignData" resultClass="hashmap" parameterClass="map">
+		select co_code,
+		       co_name,
+		       co_type_code,
+		       (select av.val
+		          from as_val av
+		         where av.val_id = mc.co_type_code
+		           and av.valset_id = 'VS_CO_TYPE') as co_type_name,
+		       parent_co_code,
+		       (select mco.co_name from ma_company mco where mc.parent_co_code=mco.co_code) as parent_co_name
+		  from ma_company mc
+		  where mc.nd = #nd#
+   	</select>
+   	
+   	<select id="getOrgForeignData" resultClass="hashmap" parameterClass="map">
+		select ao.org_code,
+		       ao.org_name,
+		       ao.co_code,
+		       (select mc.co_name from ma_company mc where mc.co_code = ao.co_code and mc.nd=#nd#) as co_name,
+		       ao.parent_org_code,
+		       (select aor.org_name
+		          from as_org aor
+		         where aor.co_code = ao.parent_org_code) as parent_org_code
+		  from as_org ao
+		  where ao.nd=#nd#
+		  <isNotNull prepend="AND" property="coCode">
+  			co_code=#coCode#
+  		  </isNotNull>
+   	</select>
+   	
+   	<select id="getPosiInfo" resultClass="hashmap" parameterClass="map">
+	 	select posi_code, posi_name from as_position where posi_code != '-1' order by posi_code
+   	</select>
+  	
+</sqlMap>

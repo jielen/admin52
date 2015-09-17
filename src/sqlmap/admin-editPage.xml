@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="admin-editPage">
+
+	<select id="getDataFromAS_NO_RULE" resultClass="hashmap"
+		parameterClass="map">
+		select an.* from AS_NO_RULE an
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				an.COMPO_ID = #COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				an.RULE_CODE = #RULE_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_NO_RULE_SEG" resultClass="hashmap"
+		parameterClass="map">
+		select distinct an.* from AS_NO_RULE_SEG an
+			left join AS_TAB_COL at on an.SEG_FIELD = at.DATA_ITEM
+			left join AS_NO_RULE anr on an.COMPO_ID = anr.COMPO_ID and an.RULE_CODE = anr.RULE_CODE
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				an.COMPO_ID = #COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				an.RULE_CODE = #RULE_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORD_INDEX">
+				an.ORD_INDEX = #ORD_INDEX#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_VALSET" resultClass="hashmap"
+		parameterClass="map">
+		select * from as_valset
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="VALSET_ID">
+				VALSET_ID = #VALSET_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_POSITION" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_POSITION
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="POSI_CODE">
+				POSI_CODE = #POSI_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_VAL" resultClass="hashmap"
+		parameterClass="map">
+		select * from as_val
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="VALSET_ID">
+				VALSET_ID = #VALSET_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="VAL_ID">
+				VAL_ID = #VAL_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromMA_COMPANY" resultClass="hashmap"
+		parameterClass="map">
+		select mac.*,mc.co_name as DIRECTOR_NAME,ma.co_name as F_CO_NAME
+         		,vm.ORG_NAME as F_ORG_NAME,mco.co_name as PARENT_CO_NAME 
+    		from MA_COMPANY mac
+    		left join MA_COMPANY mc on mac.DIRECTOR_CODE=mc.CO_CODE and mac.nd=mc.nd
+    		left join MA_COMPANY ma on mac.F_CO_CODE=ma.co_code and mac.nd=ma.nd
+    		left join V_MA_DEPT vm on mac.F_ORG_CODE=vm.ORG_CODE
+    		left join MA_COMPANY mco on mac.PARENT_CO_CODE=mco.co_code and mac.nd=mco.nd
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="CO_CODE">
+				mac.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				mac.ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_POSI_ROLE" resultClass="hashmap"
+		parameterClass="map">
+		select ap.*, ar.ROLE_NAME from AS_ROLE ar
+			left join AS_POSI_ROLE ap on ap.ROLE_ID = ar.ROLE_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="POSI_CODE">
+				ap.POSI_CODE = #POSI_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ROLE_ID">
+				ap.ROLE_ID = #ROLE_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ORG" resultClass="hashmap"
+		parameterClass="map">
+		select distinct ao.*,ac.CO_NAME,aso.ORG_NAME as PARENT_ORG_NAME 
+    		from AS_ORG ao
+    		left join AS_COMPANY ac on ao.CO_CODE=ac.CO_CODE 
+    		left join AS_ORG aso on ao.PARENT_ORG_CODE=aso.ORG_CODE and ao.ND = aso.ND
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="CO_CODE">
+				ao.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORG_CODE">
+				ao.ORG_CODE = #ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				ao.ND = #ND#
+			</isNotNull>
+		</dynamic>
+		union select ao.*,ac.CO_NAME, '' as PARENT_ORG_NAME from AS_ORG
+		ao, AS_COMPANY ac where ao.CO_CODE=ac.CO_CODE and
+		ao.PARENT_ORG_CODE is null
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="CO_CODE">
+				ao.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORG_CODE">
+				ao.ORG_CODE = #ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				ao.ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ORG_POSITION" resultClass="hashmap"
+		parameterClass="map">
+		select op.*, ap.posi_name as POSI_NAME, va.POSI_NAME as
+			LEADER_POSI_NAME, va.ORG_NAME as LEADER_ORG_NAME 
+    	from AS_ORG_POSITION op
+    	left join as_position ap on op.posi_code = ap.posi_code
+    	left join V_AS_ORG_POSITION va on op.LEADER_POSI_ID = va.ORG_POSI_ID and op.ND = va.ND
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="CO_CODE">
+				op.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="POSI_CODE">
+				op.POSI_CODE = #POSI_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORG_CODE">
+				op.ORG_CODE = #ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				op.ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ROLE" resultClass="hashmap"
+		parameterClass="map">
+		select ar.*, mc.CO_NAME as CO_NAME from AS_ROLE ar
+			left join MA_COMPANY mc on ar.CO_CODE = mc.CO_CODE
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="ROLE_ID">
+				ar.ROLE_ID = #ROLE_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_EMP" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_EMP
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="EMP_CODE">
+				EMP_CODE = #EMP_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_USER" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_USER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="USER_ID">
+				USER_ID = #USER_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_EMP_USER" resultClass="hashmap"
+		parameterClass="map">
+		select au.USER_ID, au.USER_NAME, au.RTXUIN from AS_USER au,
+		AS_EMP ae where au.USER_ID = ae.USER_ID
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="EMP_CODE">
+				ae.EMP_CODE = #EMP_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_GROUP" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_GROUP
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="GROUP_ID">
+				GROUP_ID = #GROUP_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_EMP_POSITION" resultClass="hashmap"
+		parameterClass="map">
+		select distinct aep.*, ac.CO_NAME as CO_NAME, ao.ORG_NAME as ORG_NAME, aop.POSI_NAME as POSI_NAME 
+			from AS_EMP_POSITION aep
+			left join AS_COMPANY ac on aep.CO_CODE=ac.CO_CODE
+			and aep.nd = ac.nd
+			left join AS_ORG ao on aep.ORG_CODE=ao.ORG_CODE and aep.CO_CODE = ao.CO_CODE
+			and ao.nd = aep.nd
+			left join V_AS_ORG_POSITION aop on aep.POSI_CODE=aop.POSI_CODE and aep.CO_CODE = aop.CO_CODE and aep.ND = aop.ND
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="EMP_CODE">
+				aep.EMP_CODE = #EMP_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="POSI_CODE">
+				aep.POSI_CODE = #POSI_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ORG_CODE">
+				aep.ORG_CODE = #ORG_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="CO_CODE">
+				aep.CO_CODE = #CO_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ND">
+				aep.ND = #ND#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_EMP_ROLE" resultClass="hashmap"
+		parameterClass="map">
+		select aer.*, ar.ROLE_NAME from AS_EMP_ROLE aer
+    		left join AS_ROLE ar on aer.ROLE_ID = ar.ROLE_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="EMP_CODE">
+				aer.EMP_CODE = #EMP_CODE#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ROLE_ID">
+				aer.ROLE_ID = #ROLE_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_COMPO_NO" resultClass="hashmap"
+		parameterClass="map">
+		select ac.COMPO_ID, ac.COMPO_NAME, ac.NO_FIELD, at.DATA_ITEM_NA ,at.DATA_ITEM 
+			from AS_COMPO ac
+			left join AS_TAB_COL at on ac.MASTER_TAB_ID = at.TAB_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				ac.COMPO_ID = #COMPO_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_NUM_TOOL" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_NUM_TOOL
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="NUM_TOOL_ID">
+				NUM_TOOL_ID = #NUM_TOOL_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_NUM_TOOL_RC" resultClass="hashmap"
+		parameterClass="map">
+		select ac.no_field, an.compo_id, an.rule_code,an.rule_name,an.no_prefix,
+      		an.no_index_len,an.is_cont,an.num_tool_id,an.is_incl_atoz,an.no_aftfix,
+       		an.is_fill_zero
+  	from AS_NO_RULE an
+  		left join AS_COMPO ac
+    on an.COMPO_ID = ac.COMPO_ID
+  		left join AS_NUM_TOOL ant
+    on an.NUM_TOOL_ID = ant.NUM_TOOL_ID
+  		left join AS_TAB_COL at 
+    on ac.NO_FIELD = at.DATA_ITEM
+		<dynamic>
+			<isNotNull prepend="AND" property="COMPO_ID">
+				an.COMPO_ID=#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				an.RULE_CODE=#RULE_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PRINT_JASPERTEMP" resultClass="hashmap"
+		parameterClass="map">
+		select ap.* from AS_PRINT_JASPERTEMP ap
+			left join AS_COMPO ac on ap.PRN_COMPO_ID =ac.COMPO_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="PRN_COMPO_ID">
+				ap.PRN_COMPO_ID=#PRN_COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="PRN_TPL_JPCODE">
+				ap.PRN_TPL_JPCODE=#PRN_TPL_JPCODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_SYS_OPT" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_TEMP
+	</select>
+	<select id="getDataFromAS_IP" resultClass="hashmap"
+		parameterClass="map">
+		select ai.* from AS_IP ai
+			left join AS_EMP ae on ai.USER_ID = ae.EMP_CODE
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="GRANT_IP">
+				ai.GRANT_IP=#GRANT_IP#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PUBLISH_CONTENT" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_PUBLISH_CONTENT
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="SID">
+				SID = #SID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP" resultClass="hashmap"
+		parameterClass="map">
+		select af.* from AS_FILE_EXP af
+			left join AS_COMPO ac on af.COMPO_ID =ac.COMPO_ID
+			left join AS_NO_RULE an on af.RULE_ID=an.RULE_CODE
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				af.COMPO_ID = #COMPO_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP_TABLE" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_FILE_EXP_TABLE
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				COMPO_ID=#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="TAB_SEQ">
+				TAB_SEQ=#TAB_SEQ#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP_FIELD" resultClass="hashmap"
+		parameterClass="map">
+		select af.* from AS_FILE_EXP_FIELD af
+			left join AS_COMPO ac on af.MAP_COMPO=ac.COMPO_ID
+			left join AS_TAB_COL at on af.MAP_FIELD=at.DATA_ITEM and af.MAP_S_FIELD=at.DATA_ITEM
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				af.COMPO_ID=#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="TAB_SEQ">
+				af.TAB_SEQ=#TAB_SEQ#
+			</isNotNull>
+			<isNotNull prepend="AND" property="FIELD_SEQ">
+				af.FIELD_SEQ=#FIELD_SEQ#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_DESKTOP" resultClass="hashmap"
+		parameterClass="map">
+		select ad.*,adi.IMG_NAME as IMG_NAME from AS_DESKTOP ad
+			left join AS_DESKTOP_IMG adi on ad.AREA_IMG =adi.FILE_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="AREA_ID">
+				ad.AREA_ID=#AREA_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="USER_ID">
+				ad.USER_ID=#USER_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_DESKTOP_AREA" resultClass="hashmap"
+		parameterClass="map">
+		select ad.*, am.MENU_NAME, ac.COMPO_NAME from AS_DESKTOP_AREA ad 
+			left join AS_MENU am on ad.MENU_ID =am.MENU_ID
+			left join AS_COMPO ac on ad.COMPO_ID=ac.COMPO_ID
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="AREA_ID">
+				ad.AREA_ID=#AREA_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="USER_ID">
+				ad.USER_ID=#USER_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="COMPO_ID">
+				ad.COMPO_ID=#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="MENU_ID">
+				ad.MENU_ID=#MENU_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP_NAME_RULE" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_NO_RULE
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				COMPO_ID =#COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				RULE_CODE =#RULE_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILE_EXP_NAME_RULE_SEG"
+		resultClass="hashmap" parameterClass="map">
+		select distinct an.* from AS_NO_RULE_SEG an
+			left join AS_TAB_COL at on an.SEG_FIELD=at.DATA_ITEM
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				an.compo_id = #COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				an.rule_code = #RULE_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_AUTHPRT" resultClass="hashmap"
+		parameterClass="map">
+		select at.*, ae.EMP_CODE as USER_ID, ae.EMP_NAME as EMP_NAME
+		from AS_TEMP at, AS_EMP ae where at.OPT_USERID = ae.EMP_CODE
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="COMPO_ID">
+				at.COMPO_ID = #COMPO_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="RULE_CODE">
+				at.RULE_CODE = #RULE_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ORGANIZATION_TREE" resultClass="hashmap"
+		parameterClass="map">
+		select * from V_AS_ORGANIZATION_TREE where (ND = #svNd# or
+		ND='0000') and (P_CODE is null or P_CODE=' ')
+		<dynamic>
+			<isNotNull prepend="AND" property="path">
+				CODE in ($path$ ,'free_position_group_20060626')
+			</isNotNull>
+			<isNotNull prepend="AND" property="cond">
+				<isEqual property="cond" compareValue="1">
+					1 = 0
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ADMIN" resultClass="hashmap"
+		parameterClass="map">
+		select ad.*,au.USER_NAME as USER_NAME from AS_ADMIN ad, AS_USER
+		au where ad.USER_ID = au.USER_ID
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="path">
+				ad.PATH = #path#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_USER_GROUP" resultClass="hashmap"
+		parameterClass="map">
+		select aug.* ,au.USER_NAME as USER_NAME from AS_USER_GROUP aug,
+		AS_USER au, AS_GROUP ag where aug.USER_ID = au.USER_ID and
+		aug.GROUP_ID = ag.GROUP_ID
+		<dynamic prepend="">
+			<isNotNull prepend="and" property="GROUP_ID">
+				aug.GROUP_ID= #GROUP_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_ROLE_GROUP" resultClass="hashmap"
+		parameterClass="map">
+		select arg.* ,ar.ROLE_NAME as ROLE_NAME from AS_ROLE_GROUP arg,
+		AS_ROLE ar, AS_GROUP ag where arg.ROLE_ID = ar.ROLE_ID and
+		arg.GROUP_ID = ag.GROUP_ID
+		<dynamic prepend="">
+			<isNotNull prepend="and" property="GROUP_ID">
+				arg.GROUP_ID= #GROUP_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getDataFromAS_TEMP" resultClass="hashmap"
+		parameterClass="map">
+		select * from AS_TEMP
+	</select>
+	<select id="getDataFromAS_EMP_GROUP" resultClass="hashmap"
+		parameterClass="map">
+		select aug.* ,ag.GROUP_NAME as GROUP_NAME from AS_USER_GROUP
+		aug, AS_EMP ae, AS_USER au, AS_GROUP ag where aug.USER_ID =
+		au.USER_ID and aug.GROUP_ID = ag.GROUP_ID and ae.USER_ID =
+		au.USER_ID
+		<dynamic prepend="">
+			<isNotNull prepend="and" property="EMP_CODE">
+				ae.EMP_CODE= #EMP_CODE#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILEIMP" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_FILEIMP_STYLE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="FIMP_ID">
+				MASTER.FIMP_ID =#FIMP_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_FILEIMP_FIELD" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AS_FILEIMP_FIELD MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="FIMP_ID">
+				MASTER.FIMP_ID =#FIMP_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_GROUP_ROLE" resultClass="hashmap"
+		parameterClass="map">
+		select arg.*,ag.GROUP_NAME as GROUP_NAME from AS_ROLE_GROUP arg,
+		AS_GROUP ag where arg.GROUP_ID = ag.GROUP_ID
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="GROUP_ID">
+				arg.GROUP_ID = #GROUP_ID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ROLE_ID">
+				arg.ROLE_ID = #ROLE_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_ARTICLE" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.ID, MASTER.TITLE, MASTER.CREATOR, MASTER.PUBTIME,
+		MASTER.TYPE, MASTER.ATTATCH,
+		MASTER.ATTATCH_BLOBID from AP_ARTICLE MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="ID">
+				MASTER.ID =#ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_PORTLET" resultClass="hashmap"
+		parameterClass="map">
+		select MASTER.* from AP_PORTLET MASTER
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="PORTLET_ID">
+				MASTER.PORTLET_ID =#PORTLET_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<delete id="deleteRoleFunc" parameterClass="map">
+		delete from as_role_func where role_id = #roleId#
+	</delete>
+	<delete id="deleteRoleNumLim" parameterClass="map">
+		delete from as_role_num_lim where role_id = #roleId#
+	</delete>
+	<delete id="deleteRoleSubLim" parameterClass="map">
+		delete from as_role_sub_numlim where role_id = #roleId#
+	</delete>
+
+	<delete id="deleteUserFunc" parameterClass="map">
+		delete from as_user_func where user_id = #userId#
+	</delete>
+	<delete id="deleteUserGrant" parameterClass="map">
+		delete from as_user_grant where GRANT_USER = #userId#
+	</delete>
+	<delete id="deleteUserNumLiim" parameterClass="map">
+		delete from as_user_num_lim where user_id = #userId#
+	</delete>
+	<delete id="deleteUserSession" parameterClass="map">
+		delete from as_user_session where user_id = #userId#
+	</delete>
+	<delete id="deleteUserSche" parameterClass="map">
+		delete from as_user_sche where user_id = #userId#
+	</delete>
+	<delete id="deleteUserSubNumLim" parameterClass="map">
+		delete from as_user_sub_numlim where user_id = #userId#
+	</delete>
+
+	<typeAlias alias="AsArticle" type="com.anyi.admin.bean.AsArticle" />
+	<resultMap id="AsArticle" class="AsArticle">
+		<result property="id" column="ID" />
+		<result property="title" column="TITLE" />
+		<result property="creator" column="CREATOR" />
+		<result property="pubtime" column="PUBTIME" />
+		<result property="type" column="TYPE" />
+		<result property="attatch" column="ATTATCH" />
+		<result property="attatch_blobid" column="ATTATCH_BLOBID" />
+		<result property="content" column="CONTENT"
+			typeHandler="org.springframework.orm.ibatis.support.ClobStringTypeHandler" />
+	</resultMap>
+	<typeAlias alias="ApArticlePortlet" type="com.anyi.admin.bean.ApArticlePortlet" />
+	<resultMap id="ApArticlePortlet" class="ApArticlePortlet">
+		<result property="articleId" column="ARTICLEID" />
+		<result property="portletId" column="PORTLETID" />
+		<result property="portletType" column="PORTLET_TYPE" />
+	</resultMap>
+	<select id="selectAsArticle" resultClass="AsArticle"
+		parameterClass="String">
+		select * from AP_ARTICLE WHERE ID = #id#
+	</select>
+	<update id="updateAsArticle" parameterClass="AsArticle">
+		UPDATE AP_ARTICLE set TITLE = #title#, CREATOR = #creator#,
+		PUBTIME = #pubtime#, TYPE = #type#, ATTATCH = #attatch#,
+		ATTATCH_BLOBID = #attatch_blobid#,
+		CONTENT = #content,jdbcType=CLOB,javaType=java.lang.String#
+		where ID = #id#
+	</update>
+	<delete id="deleteAsArticle" parameterClass="String">
+		delete from AP_ARTICLE where ID = #id#
+	</delete>
+	<insert id="insertAsArticle" parameterClass="AsArticle">
+		insert into AP_ARTICLE ( ID, TITLE, CREATOR, PUBTIME, TYPE,
+		ATTATCH, ATTATCH_BLOBID, CONTENT) values ( #id#,
+		#title#, #creator#, #pubtime#, #type#, #attatch#,
+		#attatch_blobid#,
+		#content,jdbcType=CLOB,javaType=java.lang.String#)
+	</insert>
+	<select id="selectGroupPage" resultClass="hashmap"
+		parameterClass="map">
+		select PAGE_ID  from ap_group_page where group_id = #GroupId#
+	</select>
+	<delete id="deleteGroupPage" parameterClass="map">
+		delete from ap_group_page where page_id = #PAGE_ID#
+	</delete> 
+	<delete id="deleteGroupApMenu" parameterClass="map">
+		delete from ap_menu where ap_menu.parent_id in (select menu_id from ap_menu where parent_id = #PAGE_ID#)
+    or ap_menu.parent_id = #PAGE_ID# or ap_menu.menu_id = #PAGE_ID#
+	</delete> 
+	<delete id="deleteGroupApMenuCompo" parameterClass="map">
+     delete from ap_menu_compo where ap_menu_compo.MENU_ID in (select menu_id from ap_menu
+     where ap_menu.parent_id in (select menu_id from ap_menu where parent_id = #PAGE_ID#)
+     or ap_menu.parent_id = #PAGE_ID#) or ap_menu_compo.menu_id = #PAGE_ID#
+	</delete>
+	<delete id="deleteArticlePortlet" parameterClass="ApArticlePortlet">
+		delete from AP_ARTICLE_PORTLET where ARTICLEID = #articleId# and PORTLETID = #portletId#
+	</delete>
+	<insert id="insertArticlePortlet" parameterClass="ApArticlePortlet">
+		insert into AP_ARTICLE_PORTLET ( ARTICLEID, PORTLETID, PORTLET_TYPE)
+		values ( #articleId#, #portletId#, #portletType#)
+	</insert>
+	<select id="selectArticlePortlet" parameterClass="map" resultClass="ApArticlePortlet">
+		select * from AP_ARTICLE_PORTLET
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="PORTLETID">
+				PORTLETID = #PORTLETID#
+			</isNotNull>
+			<isNotNull prepend="AND" property="ARTICLEID">
+				ARTICLEID = #ARTICLEID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getDataFromAS_USER_STATINFO" parameterClass="map" resultClass="hashmap">
+		select aus.*, ae.EMP_NAME as USER_NAME from AS_STATINFO aus
+			left join AS_EMP ae on aus.USER_iD = ae.EMP_CODE
+		<dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="ID">
+				ID = #ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+</sqlMap>

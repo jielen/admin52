@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.2//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="integrate-gocom">
+	<select id="getCompanyOrg" resultClass="hashmap" parameterClass="map">
+		select CO_CODE as DEPT_ID, CO_NAME as DEPT_NAME, PARENT_CO_CODE AS P_CODE, '' as P_ORG, TRANS_DATE from MA_COMPANY 
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="nd">
+				ND = #nd#
+			</isNotNull>
+			<isNotNull prepend="AND" property="updateTime">
+				TRANS_DATE > to_date(#updateTime#, 'YYYY-MM-DD hh24:mi:ss')
+			</isNotNull>
+		</dynamic>
+	union
+		select CO_CODE || '_' || ORG_CODE as DEPT_ID, ORG_NAME as DEPT_NAME, CO_CODE as P_CODE, PARENT_ORG_CODE as P_ORG, TRANS_DATE from AS_ORG
+		<dynamic prepend="where">
+			<isNotNull prepend="AND" property="nd">
+				ND = #nd#
+			</isNotNull>
+			<isNotNull prepend="AND" property="updateTime">
+				TRANS_DATE > to_date(#updateTime#, 'YYYY-MM-DD hh24:mi:ss')
+			</isNotNull>
+		</dynamic>
+		order by DEPT_ID ASC
+	</select>
+	<select id="getEmp" resultClass="hashmap" parameterClass="map">
+		select distinct ae.EMP_CODE, ae.EMP_NAME, ae.EMP_INDEX, ae.SEX, ae.PHONE, ae.EMAIL, ae.USER_ID, 
+		au.USER_NAME, au.PASSWD, aep.ORG_CODE as P_CODE, aep.CO_CODE as CO_CODE from AS_EMP ae, AS_USER au, AS_EMP_POSITION aep
+		where ae.USER_ID = au.USER_ID and ae.EMP_CODE = aep.EMP_CODE
+		<dynamic prepend="">
+			<isNotNull prepend="AND" property="nd">
+				ND = #nd#
+			</isNotNull>
+		</dynamic>
+		order by EMP_INDEX ASC
+	</select>
+	<select id="getUserList" resultClass="hashmap">
+		select user_id from as_user
+	</select>
+	<insert id="savaTemp" parameterClass="map">
+		insert into AS_TEMP_GOCOM (TASK_ID, TYPE, USER_ID) values(#taskId#, #type#, #userId#)
+	</insert>
+	<select id="getTemp" resultClass="hashmap" parameterClass="map">
+		select * from AS_TEMP_GOCOM where task_id = #taskId# and type = #type# and USER_ID = #userId#
+	</select>
+	<select id="getUserMobile" resultClass="hashmap" parameterClass="map">
+		select * from as_emp where user_id=#userId#
+	</select>
+	<select id="getLastUpdateTime" resultClass="hashmap" parameterClass="map">
+		select * from as_info where key='LAST_UPDATE_TIME'
+	</select>
+	
+	<select id="getUpdateTime" resultClass="hashmap" parameterClass="map">
+		select * from as_info where key='LAST_UPDATE_TIME'
+	</select>
+	<insert id="insertUpdateTime" parameterClass="map">
+		insert into as_info values('LAST_UPDATE_TIME', #alterTime#)
+	</insert> 
+	<update id="updateTime" parameterClass="map">
+		update as_info  set value = #alterTime# where key='LAST_UPDATE_TIME'
+	</update>
+	
+</sqlMap>

@@ -1,0 +1,10 @@
+<!DOCTYPE xwork PUBLIC
+    "-//OpenSymphony Group//XWork 1.0//EN"
+    "http://www.opensymphony.com/xwork/xwork-1.0.dtd"
+ >
+ <!-- "file:///temp/ross/xwork/src/etc/xwork-1.0.dtd"  -->
+
+<xwork>
+  <include file="xwork-gp.xml"/>   
+  <include file="xwork-admin.xml"/> 
+</xwork>    
