@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    <!--//service part  -->
+    <bean id="printSet" class="com.anyi.gp.print.service.imp.PrintSetServiceImp">
+    	<property name="baseDAO" ref="baseDao"></property>
+    </bean>
+    <bean id="jrPrintService" class="com.anyi.gp.print.service.imp.JrPrintServiceImp">
+    	<property name="commonService" ref="commonService"></property>
+    </bean>
+    
+    <!-- //action part -->
+    <bean id="compoTplInfo" class="com.anyi.gp.print.action.AjaxCompoTplInfoAction" scope="prototype">
+    	<property name="printParameter" ref="printSet"></property>
+    </bean>
+    <bean id="setPSParameter" class="com.anyi.gp.print.action.SetPSParameterAction" scope="prototype">
+    	<property name="printParameter" ref="printSet"></property>
+    </bean>
+    <bean id="getPSParameter" class="com.anyi.gp.print.action.GetPSParameterAction" scope="prototype">
+    	<property name="printParameter" ref="printSet"></property>
+    </bean>
+    <bean id="getTextDataFromFile" class="com.anyi.gp.print.action.GetTextDataFromFileAction" scope="prototype">
+    	<property name="printParameter" ref="printSet"></property>
+    </bean>
+    <bean id="setJasperTextData" class="com.anyi.gp.print.action.SetJasperTextDataAction" scope="prototype">
+    	<property name="printParameter" ref="printSet"></property>
+    </bean>
+    <bean id="savePrintTemplate" class="com.anyi.gp.print.action.SavePrintTemplateAction" scope="prototype">
+    	<property name="printParameter" ref="serviceFacade"></property>
+    </bean>
+    <bean id="jrPrint" class="com.anyi.gp.print.action.JrPrintAction" scope="prototype">
+    	<property name="jrPrintService" ref="jrPrintService"></property>
+    </bean>
+    <bean id="jrPrintPrinter" class="com.anyi.gp.print.action.JrPrintPrinterAction" scope="prototype">
+    </bean>
+    <bean id="jrPrintPreview" class="com.anyi.gp.print.action.JrPrintPreviewAction" scope="prototype" />
+    <bean id="jrPrintDirect" class="com.anyi.gp.print.action.JrPrintDirectAction" scope="prototype" />
+    	
+    <bean id="prnTempDist" class="com.anyi.gp.print.action.PrnTempDistAction" scope="prototype">
+    </bean>
+</beans>

@@ -1,0 +1,338 @@
+<!-- $Id: selectPage.jsp,v 1.15.2.1 2010/07/13 03:34:15 liuxiaoyong Exp $ -->
+<%@ page contentType="text/html; charset=GBK" %>
+<%@ page language="java" %>
+<%@ page import="com.anyi.gp.pub.LangResource" %>
+<%@ page import="com.anyi.gp.util.StringTools" %>
+<%@ page import="com.anyi.gp.pub.SessionUtils" %>
+
+<%@ taglib uri="/applus" prefix="applus"%>
+
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+<jsp:useBean id="selectPageBeanId" scope="page" class="com.anyi.gp.core.bean.SelectPageBean" />
+<LINK href="script/applus.css" rel="stylesheet" type="text/css">
+<link href="gp/css/pagestyle.css" rel=stylesheet type=text/css>
+<SCRIPT language="javascript" src="script/General.js"></SCRIPT>
+<SCRIPT language="javascript" src="script/ListPage.js"></SCRIPT>
+<SCRIPT language="javascript" src="script/SelectPage.js"></SCRIPT>
+<SCRIPT language="javascript" src="script/popmenu.js"></SCRIPT>
+<SCRIPT language="javascript" src="script/TableSort.js"></SCRIPT>
+<SCRIPT language="javascript" src="script/Pagination.js"></SCRIPT>
+<SCRIPT language="VBScript" src="script/formenctype.vbs"></SCRIPT>
+<%
+	String compoName = (String)request.getParameter("componame");
+	String masterCompoName = request.getParameter("masterCompoName");
+	String subSys = StringTools.getSubSys(masterCompoName);
+	String isAdd= (String)request.getParameter("isadd");
+	String userId =  SessionUtils.getAttribute(request,"svUserID");
+  String title = request.getParameter("caption");	
+  String condition = (String)request.getParameter("condition");
+  String lang = SessionUtils.getAttribute(request, "lang");
+  LangResource lr = LangResource.getInstance();
+  if(title == null || title.length() == 0)
+  	title = lr.getLang(compoName);
+  
+  if (request.getParameter("sql")!= null 
+      && !"".equals((String)request.getParameter("sql").trim())){
+    title= "";
+  }
+  
+  request.setAttribute("componame",compoName);
+  request.setAttribute("svUserID",userId);
+  request.setAttribute("lang",lang);
+  selectPageBeanId.setRequest(request);
+%>
+
+<%
+	String token = (String) SessionUtils.getToken(request);
+  if(token == null){
+  	token = "";
+  }
+%>
+<applus:include language="javascript">
+gp.page.Toolbar;
+gp.pub.DataTools4;
+gp.pub.PublicFunction;
+gp.page.Page4;
+</applus:include>
+
+<SCRIPT language="javascript" src="script/<%=subSys%>/<%=compoName%>.js"></SCRIPT>
+
+<script language="javascript">
+  document.onclick=closeMenu;
+  var compoName="<%=compoName%>";
+  var TOKEN = '<%=token%>';
+  var isadd="<%=isAdd %>";
+</script>
+<!--
+<table class=menu id="schemaMenuID" value="schemaMenuID">
+ <tr>
+   <td>
+	 <table class=menu ID=searchMenu><tr>
+		<tr><td id=searchMenu1 value=""></td></tr>
+		<tr><td id=searchMaxLen value="0"></td></tr>
+		<tr><td><hr size='1px' color='#7184A9'></td></tr>
+		<tr><td id=searchM value="设置方案" onclick='searchF()' onmouseover='doHight(event.toElement)' onmouseout='clearHight(event,"searchM")'>&nbsp&nbsp设置方案&nbsp&nbsp</td></tr>
+	</table>
+   </td>
+ </tr>
+</table>
+-->
+<% 
+	String shemaHtml = selectPageBeanId.getSchemaNameMenuHTML();
+	if(shemaHtml != null && shemaHtml.length() > 0){
+		out.println(shemaHtml);	
+    }else{
+%>
+<table class=menu id="schemaMenuID" value="schemaMenuID">
+ <tr>
+   <td>
+	 <table class=menu ID=searchMenu><tr>
+		<tr><td id=searchMenu1 value=""></td></tr>
+		<tr><td id=searchMaxLen value="0"></td></tr>
+		<tr><td><hr size='1px' color='#7184A9'></td></tr>
+		<tr><td id=searchM value="设置方案" onclick='searchF()' onmouseover='doHight(event.toElement)' onmouseout='clearHight(event,"searchM")'>&nbsp&nbsp设置方案&nbsp&nbsp</td></tr>
+	</table>
+   </td>
+ </tr>
+</table>
+<%}%>
+<%System.err.println(selectPageBeanId.getSchemaNameMenuHTML());%>
+<title>
+选择
+<%=title%>
+</title>
+
+<script>
+var _oPwin= null;
+var _asSearchField= null;
+var _tIsFuzzyMatch= true;
+var _sDefSearchTextFromArg= "";
+var _tIsAllCheckVisible= false;
+var _sForeignSqlForSelect= "";
+var _sForeignConditionForSelect= "";
+if (window.dialogArguments!= null 
+    && window.dialogArguments[0]!= null
+    && window.dialogArguments.length== 7){
+  _oPwin= window.dialogArguments[0];
+  _asSearchField= window.dialogArguments[1];
+  _tIsFuzzyMatch= window.dialogArguments[2]=="true"?true:false;
+  _sDefSearchTextFromArg= window.dialogArguments[3];
+  _tIsAllCheckVisible= window.dialogArguments[4]=="true"?true:false;
+  _sForeignSqlForSelect= window.dialogArguments[5];
+  _sForeignConditionForSelect= window.dialogArguments[6];
+}
+
+var _sSelectSql= "<%=request.getParameter("sql")%>";
+if (_sSelectSql.toLowerCase()== "null"){
+  _sSelectSql= null;
+}
+
+function disposeSearchCond(){
+  if (SearchInAllCheck.checked){
+    pageCondition.value= "";
+  }else{
+    pageCondition.value= pageCondition_BK.value;
+  }
+}
+
+function thisPageInit(){
+  if (!_tIsAllCheckVisible){
+    SearchInAllLabel.style.display= "none";
+  }
+  var voTB= PageX.getCtrlObj("toolbar");
+  if (voTB!= null){
+    voTB.addListener(new Listener(voTB.OnCallClick, eventAnswer_Toolbar_OnCallClick, this));  
+  }
+  if (isadd== null || isadd.toUpperCase()=="NULL" || isadd.toUpperCase()== "N"){
+    voTB.setCallVisible("fadd", false);
+    voTB.setCallVisible("fnew", false);
+  }  
+}
+//----------------------------------------------------------------------
+function eventAnswer_Toolbar_OnCallClick(oSender, oCall, oEvent){
+  switch(oCall.id){
+    case "fcommit":
+      okF();
+      break;
+    case "fadd":
+      addfunc();
+      break;
+    case "fnew":
+      addfunc();  
+      break;
+    default:
+  }
+}
+//----------------------------------------------------------------------
+</script>
+</head>
+
+<body onmouseup="mouseup()" onresize="windowResize(120)"
+onunload="closeSelectPage()" leftMargin="0" rightMargin="0" topMargin="0"
+class="clsPageBody">
+<jsp:getProperty name="selectPageBeanId" property="entityFields" />
+<jsp:getProperty name="selectPageBeanId" property="entityPaginationInfo" />
+<span id="svCoCode" value="<%=SessionUtils.getAttribute(request, "svCoCode")%>"/></span>
+<span id="condition_id" value="<%=condition%>"></span>
+<span id="pageCondition" value="<%=condition%>"></span>
+<span id="pageCondition_BK" value="<%=condition%>"></span>
+
+<span id="svUserID" value='<%=userId%>'></span>
+<span id="compo_id" value='<%=compoName%>'></span>
+
+<applus:init>
+  initPage();
+  thisPageInit();
+</applus:init>
+
+<table border="0" width=100% cellpadding="0" cellspacing="0" >
+  <tr>
+    <td>
+<%
+if (Boolean.valueOf(request.getParameter("ismulti")).booleanValue()){
+%>
+<applus:toolbar id="toolbar">  
+  <call id="fcommit" type="command" caption="确定" accesskey="Y" isgranttoall="true" />
+  <call id="fadd"    type="command" caption="新增" accesskey="N"/>
+  <call id="fnew"    type="command" caption="新增" accesskey="N"/>
+</applus:toolbar>
+<%}else{%>
+<applus:toolbar id="toolbar" componame="<%=compoName%>">
+  <call id="fadd" type="command" caption="新增" accesskey="N" />
+  <call id="fnew" type="command" caption="新增" accesskey="N" />
+</applus:toolbar>
+  
+<table border="0" width=100% cellpadding="0" cellspacing="0" >
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<% } %>
+    </td>
+  </tr>
+</table>
+
+<span id="pageTypeID" value="selectPage"></span>
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+  <tr>
+    <td width="50%">
+    </td>
+    <td>
+
+<table border="0" width=100% cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <table cellpadding="0" cellspacing="0" border=0>
+        <tr>
+          <td width=2>
+          </td>
+          <td>
+            <%if(SessionUtils.getAttribute(request, "svUserID") != null){
+            %>
+						<%=selectPageBeanId.getSearchTable()%>
+            <%}
+            %>
+          </td>
+          <td width=40%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+    </td>
+    <td style="vertical-align:bottom;">
+
+<table border="0" style="vertical-align:bottom;border:0px solid #808080;width:100%;height:100%;font-size:9pt;">
+  <tr>
+    <td width="100%" nowrap>
+    <label id="SearchInAllLabel" for="SearchInAllCheck"><input type="checkbox" id="SearchInAllCheck" style="height:17px;">在全部中搜索</label>
+    </td>
+  </tr>
+</table>
+
+    </td>
+    <td width="50%">
+    </td>
+  </tr>
+</table>
+
+<table><tr><td height="2"></td></tr></table>
+<table width="100%" border="0" id="dataTableID" onmousemove="mousemove()">
+  <tr>
+  <td>
+    
+    
+  <div id="grid" class="clsGridContainer">
+    <table id="head" class="clsGridHeadTable" cellspacing="0px"
+cellpadding="0px" border="1px" borderColor="#FFFFFF">
+      <tbody>
+        <tr class="clsGridHeadRow" onmousedown="menuEvent('<jsp:getProperty name="selectPageBeanId" property="tableName" />')">
+					<% selectPageBeanId.getDataTableHeader(out);%>
+        </tr>
+      </tbody>
+    </table>
+    <jsp:getProperty name="selectPageBeanId" property="gridColTable" />
+    <div id="gridBody" class="clsGridBody" onscroll="body_Scroll()">
+      <table id="gridBodyTable" cellpadding="0px" class="clsGridBodyTable"
+cellspacing="0px" border="1px" borderColor="#FFFFFF">
+          <jsp:getProperty name="selectPageBeanId" property="dataCols" />
+        <tbody>
+					<% selectPageBeanId.getDataTableBody(out);%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+  </td>
+  </tr>
+</table>
+	<%=selectPageBeanId.getForeignFieldMeta()%>
+<table><tr><td height="2"></td></tr></table>
+<table border="0">
+  <tr>
+    <td width="60%"></td>
+    <td align="right" nowrap>
+      <span id="paginationButtonID">
+        <jsp:getProperty name="selectPageBeanId" property="paginationControlAreaHTML" />
+      </span>
+    </td>
+  </tr>
+</table>
+<DIV class="clsSlide" id="slide"></DIV>
+
+<div id="ie5menu" class="clsPopMenu"  onclick="clickMenu()" onMouseover="highlightie5()" onMouseout="lowlightie5()">
+<table cellspacing="0px" cellpadding="0px" border="0px" id="popTable" style="font-size: 12px;">
+	<tr>
+		<td colspan=2 align="right" style="background-color:#333399;color:white">列风格设置<img src="/style/img/button/menu_close.gif" onclick="hidemenuie5();"></td>
+	</tr>
+
+    <!--加入锁定或隐藏的选项 <option>. Leidh;20040404;-->
+    <tr>
+    <td colspan=2>
+    <div style= "border-style:groove; border-width:2px">
+    <input type="radio" value="V1" checked name="__U_PopMenu_Option_LockOrHidden" id="__U_PopMenu_LockOption" onclick="selectFuncOption();">锁定列
+    <br>
+    <input type="radio" value="V2" name="__U_PopMenu_Option_LockOrHidden" id="__U_PopMenu_HideOption" onclick="selectFuncOption();">隐藏列
+    </div>
+    </td>
+    </tr>
+</table>
+</div>
+<IFRAME id="exportFrame" style="display:none" src="blank.html"></IFRAME>
+<script language="javascript">
+  //document.oncontextmenu=showNone;
+  if(document.all&&window.print)
+    document.body.onclick=hidemenuie5;
+</script>
+
+<applus:endpage />
+</body>
+<HEAD> 
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE"> 
+</HEAD> 
+</html>

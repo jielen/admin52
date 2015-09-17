@@ -1,0 +1,209 @@
+<%--
+Copyright 2004 ufgov.
+Corporation home page: http://www.ufgov.com.cn
+description: 业务上级页面
+$Id: treeSelectDialog.jsp,v 1.4 2008/06/13 10:26:26 liubo Exp $
+--%>
+<%@ page language="java" contentType="text/html; charset=GBK"%>
+<%@ page import="java.util.*"%>
+<%@ page import="javax.servlet.jsp.JspWriter"%>
+<%@ page import="com.anyi.gp.util.StringTools"%>
+<%@ page import="com.anyi.gp.pub.SessionUtils"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<base href="http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/" target="_self">
+<LINK href="script/applus.css" rel=stylesheet type=text/css>
+<LINK href="script/AS/BusinessSuper.css" rel=stylesheet type=text/css>
+<style type="text/css">
+	BODY {
+		background-color: #ffffff;
+		background:none;
+	}
+</style>
+ <SCRIPT language="javascript" src="script/page.js"></SCRIPT>
+	<SCRIPT language="javascript" src="script/foreign.js"></SCRIPT>
+  <SCRIPT language="javascript" src="script/grid.js"></SCRIPT>
+  <SCRIPT language="javascript" src="script/Community.js"></SCRIPT>
+  <SCRIPT language="javascript" src="script/PageData.js"></SCRIPT>
+  <SCRIPT language="javascript" src="script/GFunctions.js"></SCRIPT>
+  <script language="JavaScript" src="script/tree.js"></script>
+  <script language="JavaScript" src="script/loading.js"></script>
+
+</head>
+<body bgcolor="#ffffff"> 
+<div align='center' id='loading' style='position: absolute; z-index: 9999; width: 288px; height: 193px; display:  none; left: 10px; top: 50px;'><img src=/style/img/businessJunior/appInstall_animated.gif>正在生成数据，请稍候...</div>
+<script language="JavaScript">
+	loading();
+	function getObjectById(id){ 
+		if(document.all) {
+			return(eval("document.all."+ id)); 
+		}
+		return(eval(id)); 
+	}		
+</script>
+<%
+	String action = request.getParameter("action");
+	if(action == null)
+		return;
+	int ac = Integer.parseInt(action);
+	if (ac <= 30){
+%>
+<script language="JavaScript">
+		function clickNode(){
+			var result = true;
+			setCurrCode(event.srcElement.code);
+			currCode = event.srcElement.code;
+			convertHighlight(currCode);
+			dialogArguments.putTab<%=action%>Value(currCode, event.srcElement.value);
+		}
+		function convertHighlight(code){
+			if(document.getElementById(code + "TXT")){
+				if(document.getElementById(code + "TXT").style.backgroundColor == "highlight"){
+					document.getElementById(code + "TXT").style.backgroundColor = "#FFFFFF";
+					document.getElementById(code + "TXT").style.color = "#000000";
+				}else{
+					document.getElementById(code + "TXT").style.backgroundColor = "highlight";
+					document.getElementById(code + "TXT").style.color = "highlighttext";
+				}
+			}
+		}
+	
+</script>
+<jsp:useBean id="bj" class="com.anyi.gp.bean.BusinessJuniorBean" scope="session"/>
+<%
+  String svNd = (String)SessionUtils.getAttribute(request, "svNd");
+	switch(ac){
+		case 10:
+		/////////////self-company set
+			out.println(bj.getComsTreeStr(svNd));
+			break;
+		case 20:
+		/////////////junior-company set
+			out.println(bj.getComsTreeStr(svNd));
+			break;
+		case 11:
+		///////////self-org
+		  out.println(bj.getSuperOrgsTree(svNd));
+		  break;
+		case 21:
+		///////////junior-org
+		//System.out.println(bj.getJuniorOrgsTree(svNd));
+			out.println(bj.getJuniorOrgsTree(svNd));
+			break;
+		case 13:
+		///////////  self-users
+			out.println(bj.getSuperUsersTree(svNd));
+			break;
+		case 23:
+		///////////  junior-users
+			out.println(bj.getJuniorUsersTree(svNd));
+			break;
+		case 12:
+		//////////   self-positions
+			out.println(bj.getSuperPosisTree(svNd));
+			break;
+		case 22:
+		///////////  junior-positions
+			out.println(bj.getJuniorPosisTree(svNd));
+			break;
+		case 30:
+		//////////  compos tree
+			out.println(bj.getComsTreeStr(svNd));
+			break;
+		default:
+		  break;
+	}
+%>
+<script language="JavaScript">
+	var selectObjName = dialogArguments.event.srcElement.getAttribute("for");
+	var selectObj = dialogArguments.document.getElementById(selectObjName+"3");
+	if(selectObj){
+		for(var i=0; i< selectObj.options.length; i++){
+			convertHighlight(selectObj.options[i].value);
+		}
+	}
+</script>
+<%
+}
+else{
+	switch(ac){
+		case 31:
+			//构造单位、组织、职位、人员树状选择
+			String coms = request.getParameter("svCoCode");//根据当前登录人单位过滤
+			String isAll = request.getParameter("isall");
+%>			
+<script language="javascript">
+	_kTree_RelationToParent=false;
+	function check_Click(code,pcode){
+		var childrenNode = document.getElementById(code + "Child");
+		if (childrenNode== null) {
+			parseNode(code);
+			return;
+}
+		var children = childrenNode.childNodes;
+		for (var i=0,j=children.length; i<j; i++){
+			var childCode = children.item(i).id;
+			if (!childCode) continue;
+			if (children.item(i).folder == "Y") continue;
+			var childCode = children.item(i).id;
+			check_Click(childCode,"");
+		}
+	}
+	function parseNode(code){
+		var node = document.getElementById(code);
+		var prefix1 = node.PREFIX1;
+		var prefix2 = node.PREFIX2;
+		var prefix3 = node.PREFIX3;
+		var nodeIcon = node.NODE_ICON;
+		var flag = nodeIcon.indexOf("/style/img/tree/user.png") < 0;
+		if(flag)
+			return;
+		if (dialogArguments!=null && dialogArguments.nodeChecked){
+			
+			dialogArguments.nodeChecked(code.substring((prefix1+prefix2+prefix3).length),
+			document.getElementById(code+"TXT").value,event.srcElement.checked);
+		}
+	}
+</script>
+			<table width="98%" border="0" cellspacing="0" cellpadding="3">
+			  <tr> 
+			    <td>
+			    	<% if(!"on".equals(isAll)){%>
+			    		<a href="<%=request.getRequestURI()%>?action=31<%=coms==null?"":"&svCoCode="+coms%>&isall=off">
+			    			<img src="/style/img/tree/icon-arrow3.gif" border=0>显示我的单位</a>			    	  
+			    	<%}else{%>
+							<a href="<%=request.getRequestURI()%>?action=31<%=coms==null?"":"&svCoCode="+coms%>&isall=on">
+			    			<img src="/style/img/tree/icon-arrow3b.gif" border=0>显示全部</a>
+
+			      <%}%>			    		
+			      	|&nbsp;<a href="#" onClick="opener=null; window.close();" style="display:none">关闭窗口</a>
+			   </td>
+			  </tr>
+			  <tr> 
+			    <td>
+			<%
+        String svNd = (String)SessionUtils.getAttribute(request, "svNd");
+				if("on".equals(request.getParameter("isall")) && !StringTools.isEmptyString(coms))
+					out.println(new com.anyi.gp.pub.TreeSelect().createTree("全部", svNd));
+				else
+					out.println(new com.anyi.gp.pub.TreeSelect().getTreeByCoCode(new String[]{coms}, svNd));
+			%></td>
+			  </tr>
+			</table>
+<%
+
+			break;
+		default:
+			break;
+	}
+}
+
+%>
+<script>
+	loadFinish();
+</script>
+</body>
+</html>

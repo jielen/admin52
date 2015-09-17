@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	- Application context definition for JPetStore's business layer.
+	- Contains bean references to the transaction manager and to the DAOs in
+	- dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	<!--工作流专用-->
+	<bean id="connectionFactory"
+		class="com.kingdrive.workflow.db.ConnectionFactory">
+		<constructor-arg index="0">
+			<ref bean="myDataSource" />
+		</constructor-arg>
+	</bean>
+	<bean id="wfNewCommit"
+		class="com.anyi.gp.workflow.action.WfNewCommitAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="insertWithWorkflow"
+		class="com.anyi.gp.workflow.action.InsertWithWorkflowAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="updateWithWorkflow"
+		class="com.anyi.gp.workflow.action.UpdateWithWorkflowAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="commit" class="com.anyi.gp.workflow.action.CommitAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="deleteWithWorkflow"
+		class="com.anyi.gp.workflow.action.DeleteWithWorkflowAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="getWfdataByProcessInstId"
+		class="com.anyi.gp.workflow.action.GetWfdataByProcessInstIdAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="getListPage"
+		class="com.anyi.gp.workflow.action.GetListPageAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="rework" class="com.anyi.gp.workflow.action.ReworkAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="untreadSimply"
+		class="com.anyi.gp.workflow.action.UntreadSimplyAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="commitSimply"
+		class="com.anyi.gp.workflow.action.CommitSimplyAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="wfCommon"
+		class="com.anyi.gp.workflow.action.WfCommonAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="queryWFState"
+		class="com.anyi.gp.workflow.action.QueryWFStateAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryPreviousNodePageData"
+		class="com.anyi.gp.workflow.action.QueryPreviousNodePageDataAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryPreviousNodePageDataByNode"
+		class="com.anyi.gp.workflow.action.QueryPreviousNodePageDataByNodeAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryPreviousNodeFieldListValue"
+		class="com.anyi.gp.workflow.action.QueryPreviousNodeFieldListValueAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="updateWFData"
+		class="com.anyi.gp.workflow.action.UpdateWFDataAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryCompoEnableStartedTempate"
+		class="com.anyi.gp.workflow.action.QueryCompoEnableStartedTempateAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryDefaultActionName"
+		class="com.anyi.gp.workflow.action.QueryDefaultActionNameAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="queryDefaultNextExecutor"
+		class="com.anyi.gp.workflow.action.QueryDefaultNextExecutorAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="getExecutorsByRelation"
+		class="com.anyi.gp.workflow.action.GetExecutorsByRelationAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="queryInstanceStatus"
+		class="com.anyi.gp.workflow.action.QueryInstanceStatusAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+
+	<bean id="collectCommit"
+		class="com.anyi.gp.workflow.action.CollectCommitAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="wfInstanceTrace"
+		class="com.anyi.gp.workflow.action.WfInstanceTraceAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="interruptInstance"
+		class="com.anyi.gp.workflow.action.InterruptInstanceAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+	
+	<bean id="getFirstNode"
+		class="com.anyi.gp.workflow.action.GetFirstNodeAction"
+		scope="prototype">
+	</bean>
+	
+	<bean id="deleteDraftAndEntity"
+		class="com.anyi.gp.workflow.action.DeleteDraftAndEntityAction"
+		scope="prototype">
+		<property name="sf" ref="serviceFacade" />
+	</bean>
+	
+	<bean id="getNodeExecutorBySource"
+		class="com.anyi.gp.workflow.action.GetNodeExecutorBySourceAction"
+		scope="prototype">
+		<property name="ws" ref="workflowService" />
+	</bean>
+	
+	<bean id="getRuntimeExecutor"
+		class="com.anyi.gp.workflow.action.GetRuntimeExecutorAction"
+		scope="prototype">
+		<property name="ws" ref="workflowService" />
+	</bean>
+	
+	<bean id="removeNextNodeExecutorAction"
+		class="com.anyi.gp.workflow.action.RemoveNextNodeExecutorAction"
+		scope="prototype">
+		<property name="ws" ref="workflowService" />
+	</bean>
+	<bean id="removeNodeExecutorAction"
+		class="com.anyi.gp.workflow.action.RemoveNodeExecutorAction"
+		scope="prototype">
+		<property name="ws" ref="workflowService" />
+	</bean>
+	<bean id="appendExecutorAction"
+		class="com.anyi.gp.workflow.action.AppendExecutor"
+		scope="prototype">
+		<property name="ws" ref="workflowService" />
+	</bean>
+	<bean id="getWorklistAction"
+		class="com.anyi.gp.workflow.action.GetWorklistAction"
+		scope="prototype">
+		<property name="wfService" ref="workflowService" />
+	</bean>
+</beans>

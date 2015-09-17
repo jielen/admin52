@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>选择文件夹</title>
+
+<script>
+//----------------------------------------------------------------------
+function pageInit(){
+  //var vsCaption= window.dialogArguments;
+  //if (vsCaption!= null) CaptionTD.innerText= vsCaption;
+  window.returnValue= null;
+}
+//----------------------------------------------------------------------
+function OKButton_Click(){
+  window.returnValue= textPath.value;
+  window.close();
+}
+//----------------------------------------------------------------------
+function CancelButton_Click(){
+  window.returnValue= null;
+  window.close();
+}
+//----------------------------------------------------------------------
+function chooseFolder(){   
+	var savePath;   
+	var objSrc = new ActiveXObject("Shell.Application").BrowseForFolder(0,'请选择导出路径：',0x0001,0x0011);  //0,'' 
+	if(objSrc != null){   
+			savePath = objSrc.Items().Item().Path; 
+			document.all.savePath.value = savePath;  
+	   }
+	}
+//----------------------------------------------------------------------
+</script>
+</head>
+
+<body bgcolor="#C0C0C0" onload="pageInit();">
+
+<table border="0" width="100%">
+  <tr style="font-size:1pt">
+    <td width="2%">　</td>
+    <td width="48%">　</td>
+    <td width="2%">　</td>
+  </tr>
+  <tr style="font-size:9pt">
+    <td width="2%"></td>
+    <td width="48%" id="CaptionTD">请选择文件夹：
+    </td>
+    <td width="2%"></td>
+  </tr>
+  <tr>
+    <td width="2%">　</td>
+    <td width="48%"><input type='text'  id="textPath" size='30' name='savePath' /><input type="button" id="FileSelectInput" name="choosefolderbutton" value="选择..." onclick="chooseFolder()">
+
+    </td>
+    <td width="2%">　</td>
+  </tr>
+  <tr>
+    <td width="2%">　</td>
+    <td width="48%">　</td>
+    <td width="2%">　</td>
+  </tr>
+  <tr style="text-align:center;">
+    <td width="2%">　</td>
+    <td width="48%"><input type="button" id="OKButton" value=" 确定 " style="font-size:9pt; border-width:1;" onclick="OKButton_Click();"><input type="button" id="CancelButton" value=" 取消 " style="font-size:9pt; border-width:1;" onclick="CancelButton_Click();"></td>
+    <td width="2%">　</td>
+  </tr>
+  <tr style="font-size:1pt">
+    <td width="2%">　</td>
+    <td width="48%">　</td>
+    <td width="2%">　</td>
+  </tr>
+</table>
+
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+.clsPageBody{
+  margin-left:0px;
+  margin-top:0px;
+  margin-right:0px;
+  margin-bottom:0px;
+	font-size: 9pt;
+  background-color:white;
+  //background-image:url("gp/image/pic/bk_01.jpg");
+}
+.XclsListPageTitle{
+  position:absolute;
+  left:10px;
+  top:12px;
+	font-family:宋体;
+	font-size:10pt;
+	font-weight:bold;
+}
+.clsListPageTitle{
+	font-family:宋体;
+	font-size:10pt;
+	font-weight:bold;
+  text-align:center;
+  width:100%;
+}
+.clsEditPageTitle{
+	font-family:宋体;
+	font-size:12pt;
+	font-weight:bold;
+  text-align:center;
+}
+.clsListPageGrid{
+  position:relative;
+	font-family:宋体;
+	font-size: 9pt;
+  border:1px solid #DCDCDD;
+  left:1%;
+  width:98%;
+  height:78%;
+	cursor:hand;
+}
+.clsFreeTable{
+	font-family:宋体;
+	font-size: 9pt;
+	width:100%;
+}
+.clsFreeRow{
+  height:18px;
+}
+.clsNormCaption{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+  text-align:right;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsKeyCaption{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+	font-weight: bold;
+  text-align:right;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsNormCaptionAtCenter{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+  text-align:center;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsKeyCaptionAtCenter{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+	font-weight: bold;
+  text-align:Center;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsNormCaptionAtLeft{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+  text-align:left;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsKeyCaptionAtLeft{
+	font-family:宋体;
+	font-size: 9pt;
+  overflow: visible;
+	font-weight: bold;
+  text-align:left;
+  vertical-align:middle;
+  word-break:keep-all;
+}
+.clsPageAsterisk{
+	font-family:宋体;
+	font-size:9pt;
+	color:red;
+}
+.clsListPageEditBox{
+  position:relative; 
+  font-size:9pt;
+  border-style:solid;
+  border-color:#8B8B89;
+  border-width:0 0 1 0;
+  width:120px;
+  height:18px;
+}
+.clsEditPageEditBox{
+  position:relative;
+  font-size:9pt;
+  border-style:solid;
+  border-color:#8B8B89;
+  border-width:0 0 1 0;
+  width:150px;
+  height:18px;
+}
+.clsListPageEditBoxWithPercent{
+  position:relative; 
+  font-size:9pt;
+  border-style:solid;
+  border-color:#8B8B89;
+  border-width:0 0 1 0;
+  width:100%;
+  height:18px;
+}
+.clsEditPageEditBoxWithPercent{
+  position:relative; 
+  font-size:9pt;
+  border-style:solid;
+  border-color:#8B8B89;
+  border-width:0 0 1 0;
+  width:100%;
+  height:18px;
+}
+.clsEditBoxWithPercent{
+  position:relative; 
+  font-size:9pt;
+  border-style:solid;
+  border-color:#8B8B89;
+  border-width:0 0 0 0;
+  width:100%;
+  height:18px;
+}
+.clsPageTabstrip1{
+  position:relative; 
+  left:1%;
+  width:98%;
+  height:60%; 
+  padding:1;
+}
+.clsPageTabstrip2{
+  position:relative; 
+  left:1%;
+  width:98%;
+  height:30%; 
+  padding:1;
+}
+.clsPageGridInTabstrip{
+  position:relative;
+	font-family:宋体;
+	font-size: 9pt;
+  border-width:0;
+  width:100%;
+  height:100%;
+	cursor:hand;
+}
+.clsPageGrid1{
+  position:relative;
+	font-family:宋体;
+	font-size: 9pt;
+  border:1px solid #DCDCDD;
+  left:1%;
+  width:98%;
+  height:60%;
+	cursor:hand;
+}
+.clsPageGrid2{
+  position:relative;
+	font-family:宋体;
+	font-size: 9pt;
+  border:1px solid #DCDCDD;
+  left:1%;
+  width:98%;
+  height:30%;
+	cursor:hand;
+}
+.clsPageGridActionButton{
+  position:relative;
+	background-color: transparent;
+	border-width: 0;
+	font-family:宋体;
+	font-size: 9pt;
+	text-decoration: underline;
+}
+
+.clsPageSearchButton{
+	font-family:宋体;
+	font-size: 8pt;
+  background: transparent;
+  color: black;
+  border-width:0px;
+	cursor: hand;
+}
+.clsPageNormButton{
+  position:relative;
+	font-family:宋体;
+	font-size: 9pt;
+  border:1px solid gray;
+  background-color:transparent;
+}
+
+

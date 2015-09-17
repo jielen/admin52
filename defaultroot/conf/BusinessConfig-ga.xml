@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root>
+  <basic-information-carray-forward>
+    <table name="ga_co_type" ndfield="FISCAL" uidfields="" exceptfields="" />
+    <table name="ga_rule_cocodes" ndfield="FISCAL" uidfields="" exceptfields="" />
+    <table name="ga_rule_main" ndfield="FISCAL" uidfields="" exceptfields="" />
+  </basic-information-carray-forward>
+</root>
+

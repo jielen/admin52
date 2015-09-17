@@ -1,0 +1,401 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=GB2312">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./AS_COMPO_NO.files/filelist.xml">
+<title>部件自动编号字段设置</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>fanxiaoying</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>wtm</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>9</o:TotalTime>
+  <o:Created>2003-04-16T09:45:00Z</o:Created>
+  <o:LastSaved>2004-06-21T03:19:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>86</o:Words>
+  <o:Characters>491</o:Characters>
+  <o:Company>uf-anyi</o:Company>
+  <o:Lines>4</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>602</o:CharactersWithSpaces>
+  <o:Version>9.2812</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 磅</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\000B";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:"Times New Roman";
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+h1
+	{mso-style-next:正文;
+	margin-top:17.0pt;
+	margin-right:0cm;
+	margin-bottom:16.5pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:240%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:18.0pt;
+	mso-bidi-font-size:22.0pt;
+	font-family:"Times New Roman";
+	color:blue;
+	mso-font-kerning:22.0pt;}
+h2
+	{mso-style-next:正文;
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:170%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+h3
+	{mso-style-next:正文;
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:170%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.MsoIndex1, li.MsoIndex1, div.MsoIndex1
+	{mso-style-update:auto;
+	mso-style-next:正文;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-right:0cm;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	background:navy;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.1, li.1, div.1
+	{mso-style-name:样式1;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.10, li.10, div.10
+	{mso-style-name:标题1;
+	mso-style-parent:"标题 1";
+	margin-top:17.0pt;
+	margin-right:0cm;
+	margin-bottom:17.0pt;
+	margin-left:21.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.0pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l0 level1 lfo2;
+	tab-stops:list 21.0pt;
+	layout-grid-mode:char;
+	font-size:18.0pt;
+	mso-bidi-font-size:22.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	color:blue;
+	mso-font-kerning:22.0pt;
+	font-weight:bold;}
+p.20, li.20, div.20
+	{mso-style-name:"标题 2\.0";
+	mso-style-parent:"标题 2";
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;
+	font-weight:bold;}
+p.30, li.30, div.30
+	{mso-style-name:"标题 3\.0";
+	mso-style-parent:"标题 3";
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;
+	font-weight:bold;}
+p.11, li.11, div.11
+	{mso-style-name:正文1;
+	mso-style-parent:正文文字;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+span.normalfieldcaption1
+	{mso-style-name:normalfieldcaption1;
+	mso-ansi-font-size:10.5pt;
+	mso-bidi-font-size:10.5pt;
+	mso-ascii-font-family:"\000B";
+	mso-hansi-font-family:"\000B";}
+ /* Page Definitions */
+@page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:1088815136;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1483602714 -380459106 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-number-format:japanese-counting;
+	mso-level-style-link:标题1;
+	mso-level-text:%1、;
+	mso-level-tab-stop:21.0pt;
+	mso-level-number-position:left;
+	margin-left:21.0pt;
+	text-indent:-21.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='tab-interval:21.0pt;text-justify-trim:
+punctuation'>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<h1><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>部件自动编号字段设置</span></h1>
+
+<h2><span style='font-family:宋体;mso-ascii-font-family:Arial;mso-hansi-font-family:
+Arial'>一、作用与功能</span><span lang=EN-US><o:p></o:p></span></h2>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;mso-char-indent-size:9pt'><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>本功能用于设置各部件要求进行自动编号的字段，部件的所有字段都可用来自动编号，用户可根据需求自行选择其中若干字段。</span></p>
+
+<h2><span style='font-family:宋体;mso-ascii-font-family:Arial;mso-hansi-font-family:
+Arial'>二、操作说明</span><span lang=EN-US><o:p></o:p></span></h2>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;mso-char-indent-size:9pt'><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>系统以列表方式显示所有的部件信息，单击某记录可打开部件自动编号设置窗口，用户可在此对部件的所选字段值是否自动编号以及按何种编号规则进行选择定义，定义保存后的字段则在相应部件中的编号则由系统按相应的</span><span
+lang=EN-US><a href="AS_NO_RULE.htm"><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>自动编号规则</span></a></span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>自动生成。</span></p>
+
+<h3><span lang=EN-US style='mso-bidi-font-family:宋体'>1. 定义部件自动编号字段<o:p></o:p></span></h3>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;layout-grid-mode:char;mso-char-indent-size:9pt'><!--[if supportFields]><span
+lang=EN-US><span style='mso-element:field-begin'></span><span
+style="mso-spacerun: yes">&nbsp; </span>= 1 \* GB3<span style="mso-spacerun:
+yes">&nbsp; </span><span style='mso-element:field-separator'></span></span><![endif]--><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>①</span><!--[if supportFields]><span lang=EN-US><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US> </span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在部件信息列表中选择某部件记录行并单击，在打开部件自动编号设置窗口点击“修改”键，激活编辑窗口；</span><span
+lang=EN-US><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;layout-grid-mode:char;mso-char-indent-size:9pt'><!--[if supportFields]><span
+lang=EN-US><span style='mso-element:field-begin'></span><span
+style="mso-spacerun: yes">&nbsp; </span>= 2 \* GB3<span style="mso-spacerun:
+yes">&nbsp; </span><span style='mso-element:field-separator'></span></span><![endif]--><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>②</span><!--[if supportFields]><span lang=EN-US><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US> </span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>在自动编号字段选择栏后点击选择按钮，在弹出的信息列表中选择自动编号部件规则。</span> </p>
+
+<h3><span lang=EN-US style='mso-bidi-font-family:宋体'>2. 保存、修改<o:p></o:p></span></h3>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;layout-grid-mode:char;mso-char-indent-size:9pt'><span
+lang=EN-US><span style="mso-spacerun: yes">&nbsp;</span></span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>点击“保存”键确认存盘，如要修改，则再次点击“修改”键，用户可重新选择设置自动编号字段。点击“退出”则关闭该编辑窗口返回上级页面。</span><span
+lang=EN-US><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;layout-grid-mode:char;mso-char-indent-size:9pt'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoIndex1><b><span lang=EN-US><span style="mso-spacerun: yes">&nbsp;
+</span><a href="../plat/Plat_Select.htm"><span style='font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>选择框使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoIndex1><b><span lang=EN-US><span style="mso-spacerun: yes">&nbsp;
+</span><a href="../plat/Plat_Register.htm"><span style='font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>登记簿使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US><span style="mso-spacerun: yes">&nbsp;
+</span><a href="../plat/Plat_Search.htm"><span style='font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>搜索使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

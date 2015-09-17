@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root>
+  <basic-information-carray-forward>
+    <table name="ma_acc_item" ndfield="FISCAL" uidfields="" exceptfields="" />
+    <table name="ma_bacc" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_bank" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_banknode" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_bank_acc" ndfield="ND" uidfields="" exceptfields="" />
+    <!--<table name="ma_cash" ndfield="FISCAL" uidfields="" exceptfields="" />-->
+    <table name="ma_coa" ndfield="FISCAL" uidfields="" exceptfields="" />
+    <table name="ma_coa_acc" ndfield="FISCAL" uidfields="" exceptfields="" />
+    <table name="ma_company" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_co_acc" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_eacc" ndfield="ND" uidfields="" exceptfields="" />
+   <!-- <table name="ma_emp" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_emp_chag" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_incomeitem" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_incomeitem_type" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_org_bacc" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_outlaytype" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_project_bacc" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_project_eacc" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="ma_project_type" ndfield="ND" uidfields="" exceptfields="" />
+    
+    <table name="MA_CP_PAYTYPE" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_MANAGE" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_BANK_BAL" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_PROVIDER" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_PROVIDER_BANK_ACC" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_INCEPTDOC" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_SENDDOC_TYPE" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_SENDDOC" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_FUND" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_ORIGIN" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_PAYOUT" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_OPERATION_TYPE" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_BAL_MODE" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="MA_CP_DESC" ndfield="ND" uidfields="" exceptfields="" /> --> 
+    <table name="MA_CP_BILL_ELEMENT" ndfield="ND" uidfields="element_id" exceptfields="" /> 
+   <!-- <table name="MA_CP_DEC_ELEMENT" ndfield="ND" uidfields="element_id" exceptfields="" /> 
+    <table name="MA_CP_BILL_DEF" ndfield="ND" uidfields="default_id" exceptfields="" />   
+    <table name="MA_CP_BILL_DEF_VAL" ndfield="ND" uidfields="default_id" exceptfields="" />   
+    <table name="MA_CP_INCTRLOUT_F" ndfield="ND" uidfields="formula_id" exceptfields="" />   
+    <table name="MA_CP_EXTEND" ndfield="ND" uidfields="" exceptfields="" />     
+    <table name="MA_CP_INCTRLOUT_F_ITEM" ndfield="ND" uidfields="formula_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_MODE" ndfield="ND" uidfields="vou_mode_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_ACC_R" ndfield="ND" uidfields="acc_relation_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_ACC_R_DETAIL" ndfield="ND" uidfields="acc_relation_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_ASS_R" ndfield="ND" uidfields="ass_relation_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_ASS_R_DETAIL" ndfield="ND" uidfields="ass_relation_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_TNS_R" ndfield="ND" uidfields="tns_relation_id" exceptfields="" />   
+    <table name="MA_CP_GLVOU_TNS_R_DETAIL" ndfield="ND" uidfields="tns_relation_id" exceptfields="" />
+    <table name="MA_CP_IO_RULE" ndfield="ND" uidfields="IO_RULE_ID" exceptfields="" />
+    <table name="MA_CP_IO_RULE_DETAIL" ndfield="ND" uidfields="IO_RULE_DETAIL_ID" exceptfields="" />  -->  
+  </basic-information-carray-forward>
+</root>
+

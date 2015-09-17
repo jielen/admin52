@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>IE 设置</title>
+
+<script language="JavaScript">
+function updateIEZoneMapReg() {
+  var sUrl = "ZoneMapReg.jsp";
+  sUrl += "?" + "url=" + document.location;
+  location.href = sUrl;
+}
+</script>
+
+</head>
+
+<body leftMargin="0" rightMargin="0" topMargin="0" scroll="auto">
+
+<table  border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+      <td><img src="/style/img/main/contentleft.jpg"></td>
+      <td  background="/style/img/main/contentmidbk.jpg" width=100%>&nbsp;</td>
+      <td><img src="/style/img/main/contentright.jpg"></td>
+  </tr>
+</table>
+
+
+<blockquote>
+
+  <p>【 IE 设置】</p>
+  <ol>
+    <li>为了系统可以正常运行，需要对您的浏览器进行安全设置，此设置不会影响您访问其它网站或应用的安全。<br>
+    </li>
+    <li>您可以选择手工设置，或者程序自动设置，两种方法的最终结果是一样的，你选择其中一种方法就可以了。<br>
+    </li>
+    <li>程序自动设置<br></li>
+    <li>请点击“<a href="javascript:updateIEZoneMapReg()">updateIEZoneMap.reg</a>”文件，选择“打开”，它将帮您进行IE浏览器设置。<b>操作完成后，需要关闭IE，再重新打开。</b>这时IE窗口右下角有“可信站点”的字样，说明设置成功了。如果您执行了该文件，下面的操作就不需要执行了。<br>
+    </li>
+    <li>手工设置<br></li>
+    <li>打开IE浏览器，选择主菜单【工具】－【Internet选项】，在【常规】页签中点击“Internet临时文件”下的【设置】按钮，选中“每次访问此页时检查”选项，点击【确定】按钮。<br>
+    </li>
+    <li><!-- 要使 http://servername 成为 Internet Explorer 的可信站点，请单击“工具”－【Internet选项】，然后指向“Internet 选项”，指向“安全”，指向“可信站点”，然后单击“站点”。键入 http://servername，并单击“确定”。
+    TODO: 待完善 mk:@MSITStore:C:\WINNT\Help\cmconcepts.chm::/sag_CSWprocs_reqfile.htm -->
+    在【安全】页签中选择“受信任的站点”，然后点击【站点】按钮进入，在【可信站点】窗口中首先去掉 “对该区域中的所有站点要求服务器验证(https)”前面的勾，然后填写当前正在访问的网址，点击【添加】按钮，点击【确定】按钮。<br>
+    </li>
+    <li>在【安全】页签中选择“受信任的站点”，然后点击【自定义级别】按钮，将“ActiveX控件和插件”中的5项均选为“启用”，点击【确定】按钮。</li>
+  </ol>
+
+</blockquote>
+
+</body>
+</html>

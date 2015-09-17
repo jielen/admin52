@@ -1,0 +1,451 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=GB2312">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./AS_NUM_TOOL.files/filelist.xml">
+<title>编号器</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>樊晓英</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>wtm</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>48</o:TotalTime>
+  <o:Created>2003-09-09T03:51:00Z</o:Created>
+  <o:LastSaved>2004-06-21T03:23:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>135</o:Words>
+  <o:Characters>774</o:Characters>
+  <o:Company>uf-anyi</o:Company>
+  <o:Lines>6</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>950</o:CharactersWithSpaces>
+  <o:Version>9.2812</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 磅</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"Wingdings 2";
+	panose-1:5 2 1 2 1 5 7 7 7 7;
+	mso-font-charset:2;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+h1
+	{mso-style-next:正文;
+	margin-top:17.0pt;
+	margin-right:0cm;
+	margin-bottom:16.5pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:240%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:18.0pt;
+	mso-bidi-font-size:22.0pt;
+	font-family:"Times New Roman";
+	color:blue;
+	mso-font-kerning:22.0pt;}
+h2
+	{mso-style-next:正文;
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:170%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+h3
+	{mso-style-next:正文;
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:170%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.MsoIndex1, li.MsoIndex1, div.MsoIndex1
+	{mso-style-update:auto;
+	mso-style-next:正文;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:120%;
+	mso-pagination:none;
+	font-size:9.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+ /* Page Definitions */
+@page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:2019767750;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1601705010 966566730 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:★;
+	mso-level-tab-stop:57.0pt;
+	mso-level-number-position:left;
+	margin-left:57.0pt;
+	text-indent:-21.0pt;
+	font-family:宋体;
+	mso-hansi-font-family:"Wingdings 2";}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='tab-interval:21.0pt;text-justify-trim:
+punctuation'>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal style='margin-top:17.0pt;margin-right:0cm;margin-bottom:
+16.5pt;margin-left:0cm;line-height:240%;mso-pagination:lines-together;
+page-break-after:avoid;mso-outline-level:1;layout-grid-mode:char'><b><span
+style='font-size:18.0pt;mso-bidi-font-size:22.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman";color:blue;
+mso-font-kerning:22.0pt'>编号器</span></b><b><span lang=EN-US style='font-size:
+18.0pt;mso-bidi-font-size:22.0pt;color:blue;mso-font-kerning:22.0pt'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='margin-top:13.0pt;margin-right:0cm;margin-bottom:
+13.0pt;margin-left:0cm;line-height:170%;mso-pagination:lines-together;
+page-break-after:avoid;mso-outline-level:2;layout-grid-mode:char'><b><span
+style='font-size:11.0pt;mso-bidi-font-size:16.0pt;font-family:宋体;mso-ascii-font-family:
+Arial;mso-hansi-font-family:Arial'>一、作用与功能</span></b><b><span lang=EN-US
+style='font-size:11.0pt;mso-bidi-font-size:16.0pt;font-family:Arial;mso-bidi-font-family:
+"Times New Roman"'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;line-height:120%;layout-grid-mode:
+char'><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>1. </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>本功能主要采用编号器的形式对需要统一进行编号的所有部件进行管理，实际上就是一个分组方案。需要统一编号的各部件在定义</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><a
+href="AS_NUM_TOOL_RC.htm"><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>字段编号规则</span></a></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>时应选用同一个编号器。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;line-height:120%;layout-grid-mode:
+char'><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>2. </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>对一个编号器来说，根据是否连续编号决定是否对应多个部件的自动编号。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;line-height:120%;layout-grid-mode:
+char'><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>3. </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>使用编号器进行编号时，一个部件上的被编号字段个数不受限制。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:13.0pt;margin-right:0cm;margin-bottom:
+13.0pt;margin-left:0cm;line-height:170%;mso-pagination:lines-together;
+page-break-after:avoid;mso-outline-level:2;layout-grid-mode:char'><b><span
+style='font-size:11.0pt;mso-bidi-font-size:16.0pt;font-family:宋体;mso-ascii-font-family:
+Arial;mso-hansi-font-family:Arial'>二、操作说明</span></b><b><span lang=EN-US
+style='font-size:11.0pt;mso-bidi-font-size:16.0pt;font-family:Arial;mso-bidi-font-family:
+"Times New Roman"'><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>系统以列表方式显示所有已定义的编号器，用户可在此对编号器进行新增与搜索操作；</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>单击某记录可打开编号器设置页面，可对原信息进行修改、删除。</span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> <span lang=EN-US><o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-top:13.0pt;margin-right:0cm;margin-bottom:
+13.0pt;margin-left:0cm;line-height:170%;mso-pagination:lines-together;
+page-break-after:avoid;mso-outline-level:3;layout-grid-mode:char'><b><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:16.0pt;font-family:宋体;
+mso-bidi-font-family:宋体'>1. 新增<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 1 * GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>①</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在编号器登记簿中单击“新增”，在打开的编号器设置页面，依次录入以下信息：</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:57.0pt;text-indent:-21.0pt;line-height:
+120%;mso-list:l0 level1 lfo2;tab-stops:list 57.0pt;layout-grid-mode:char'><![if !supportLists]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-hansi-font-family:"Wingdings 2"'>★<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;
+font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>编号器代码：即是系统区别编号器的唯一标志，唯一且不能为空；</span><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:57.0pt;text-indent:-21.0pt;line-height:
+120%;mso-list:l0 level1 lfo2;tab-stops:list 57.0pt;layout-grid-mode:char'><![if !supportLists]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-hansi-font-family:"Wingdings 2"'>★<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;
+font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>编号器名称：即编码规则显示名称；</span><span lang=EN-US style='font-size:
+9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:57.0pt;text-indent:-21.0pt;line-height:
+120%;mso-list:l0 level1 lfo2;tab-stops:list 57.0pt;layout-grid-mode:char'><![if !supportLists]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-hansi-font-family:"Wingdings 2"'>★<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;
+font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>是否连续编号：对于使用同一个编号器的部件，由该选项决定当变动前缀发生变化时，顺序号是否连续。选择“是”则不考虑前缀的变化，选择“否”则根据前缀的变化自动更新编号顺序。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:57.0pt;text-indent:-21.0pt;line-height:
+120%;mso-list:l0 level1 lfo2;tab-stops:list 57.0pt;layout-grid-mode:char'><![if !supportLists]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;
+mso-hansi-font-family:"Wingdings 2"'>★<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:9.0pt;mso-bidi-font-size:12.0pt;
+font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>编号器说明：对编号器的附注说明。</span><span lang=EN-US style='font-size:
+9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 2 * GB3 <span style="mso-spacerun: yes">&nbsp;</span><span
+style='mso-element:field-separator'></span></span><![endif]--><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>②</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>定义完毕，点击“保存”确认存盘；</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 3 \* GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span style='mso-no-proof:yes'></span></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>③</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>如需要继续增加信息，单击“新增”，可在不退出当前编辑页面的情况下新增一条记录；</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 4 \* GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span style='mso-no-proof:yes'></span></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>④</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>点击“退出”则关闭该编辑页面返回上级页面。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-top:13.0pt;margin-right:0cm;margin-bottom:
+13.0pt;margin-left:0cm;line-height:170%;mso-pagination:lines-together;
+page-break-after:avoid;mso-outline-level:3;layout-grid-mode:char'><b><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:16.0pt;font-family:宋体;
+mso-bidi-font-family:宋体'>2. 修改、删除<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 1 \* GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span style='mso-no-proof:yes'></span></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>①</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在编号器登记簿中单击某条需要修改或删除的记录，打开编号器设置页面；</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 2 \* GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span style='mso-no-proof:yes'></span></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>②</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>单击“修改”，可对除编号器代码以外的信息进行重新定义，修改完毕，点击“保存”确认存盘；</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><!--[if supportFields]><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
+12.0pt'><span style='mso-element:field-begin'></span><span style="mso-spacerun:
+yes">&nbsp; </span>= 3 \* GB3<span style="mso-spacerun: yes">&nbsp; </span><span
+style='mso-element:field-separator'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span style='mso-no-proof:yes'></span></span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>③</span><!--[if supportFields]><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-end'></span></span><![endif]--><span lang=EN-US
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt'> </span><span
+style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>单击“删除”，即可将当前信息清空删除。</span><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:18.0pt;mso-char-indent-count:2.0;
+mso-char-indent-size:9.0pt;line-height:120%;layout-grid-mode:char;mso-char-indent-size:
+9pt'><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='line-height:120%;layout-grid-mode:char'><b><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style="mso-spacerun: yes">&nbsp; </span><a href="../plat/Plat_Select.htm"><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>选择框使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='line-height:120%;layout-grid-mode:char'><b><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style="mso-spacerun: yes">&nbsp; </span><a href="../plat/Plat_Register.htm"><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>登记簿使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='line-height:120%;layout-grid-mode:char'><b><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'><span
+style="mso-spacerun: yes">&nbsp; </span><a href="../plat/Plat_Search.htm"><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>搜索使用说明</span></a><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='line-height:120%;layout-grid-mode:char'><span
+lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt'>&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>

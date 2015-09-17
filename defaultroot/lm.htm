@@ -1,0 +1,73 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>用友GRP—A++ － 加密服务专用工具</title>
+</head>
+
+<body>
+
+<script>
+	
+	function disableButtons() {
+    Btn_Status.disabled = true;
+    Btn_Remote.disabled = true;
+	}
+	
+  function getSysInfo()
+  {
+  	disableButtons();
+    Btn_SysInfo.value="正在执行，请稍等……";
+    window.navigate("lm.jsp?sysinfo=1");
+  }
+
+  function showStatus()
+  {
+  	disableButtons();
+    Btn_Status.value="正在执行，请稍等……";
+    window.navigate("lm.jsp");
+  }
+
+  function startLocal()
+  {
+  	disableButtons();
+    Btn_Local.value="正在执行，请稍等……";
+    window.navigate("lm.jsp?host=&port=0");
+  }
+
+  function startRemote()
+  {
+    var host = hostInput.value;
+    if (host.length == 0) {
+      alert("请输入有效的加密服务器地址。    ");
+      hostInput.focus();
+      return;
+    }
+
+    var port = portInput.value;
+    var n = parseInt(port);
+    if (isNaN(n) || n <= 0) {
+      alert("请输入有效的加密服务器端口。    ");
+      portInput.focus();
+      return;
+    }
+
+  	disableButtons();
+    Btn_Remote.value="正在执行，请稍等……";
+    window.navigate("lm.jsp?host=" + host + "&port=" + port);
+  }
+
+
+</script>
+
+加密服务工具页面提供下列操作：
+<p>1、查看加密服务状态：<input type="button" value="查看加密服务状态" name="Btn_Status" onclick="showStatus()"></p>
+<p>2、启用加密服务：<input type="button" value="启用加密服务" name="Btn_Remote" onclick="startRemote()"></p>
+<p>远程加密服务的地址：<input type="text" size="20" name="hostInput"> 
+端口：<input type="text" size="20" name="portInput"></p>
+
+</body>
+
+</html>

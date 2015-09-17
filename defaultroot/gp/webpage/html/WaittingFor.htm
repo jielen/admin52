@@ -1,0 +1,44 @@
+
+<html>
+<head>
+<meta http-eq_iv="Content-Type" content="text/html; charset=gb2312" />
+<title>请稍候...</title>
+
+<script>
+_oPwin= null;
+_sMessage= "";
+function pageInit(){
+  _oPwin= window.dialogArguments[0];
+  _sMessage= window.dialogArguments[1];
+  _oPwin.PageX.oWaitWin= this;
+  if (_sMessage== null || _sMessage.length== 0) _sMessage="系统正在处理您的业务，请稍候...";
+  MssageTD.innerText= _sMessage;
+  setTimeout("check();", 500);
+}
+function check(){
+  if (_oPwin== null 
+      || _oPwin.closed 
+      || _oPwin.PageX== null){
+    window.close();
+  }else if(!_oPwin.PageX.tIsPageWaiting){
+    _oPwin.PageX.setWait(false);
+  }
+  setTimeout("check();", 500);
+}
+</script>
+</head>
+
+<body bgcolor="#C0C0C0" onload="pageInit();" style="cursor:wait;">
+<table border="0" style="width:100%;height:100%;font-size:9pt;">
+  <tr>
+    <td width="10%">　</td>
+    <td width="10%" valign="middle" align="center">
+      <img src="/applus/gp/image/pic/waitting.gif" style="width:50px;height:50px;">
+    </td>
+    <td width="5%">　</td>
+    <td id="MssageTD" width="65%" nowrap>系统正在处理您的业务，请稍候...</td>
+    <td width="10%">　</td>
+  </tr>
+</table>
+</body>
+</html>

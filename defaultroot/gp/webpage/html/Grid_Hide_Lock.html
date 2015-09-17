@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>表头锁定及隐藏</title>
+<LINK href="/applus/script/applus.css" rel="stylesheet" type="text/css">
+
+<script language="javascript">
+var PF= window.dialogArguments.param[0];
+</script>
+
+<SCRIPT language="javascript" src="/applus/gp/common/Base.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/common/List.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/common/StringBuffer.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/common/Map.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/common/Listener.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/common/Rect.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/Pub/Constant.js"></SCRIPT>
+<!--SCRIPT language="javascript" src="/applus/gp/Pub/PublicFunction.js"></SCRIPT-->
+<SCRIPT language="javascript" src="/applus/gp/Pub/Information.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/Pub/DataTools4.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/PageX.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/Grid.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/DataGrid.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/SelectGrid.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/PaginationConsole.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/TextBox.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/page/FileBox.js"></SCRIPT>
+
+<SCRIPT language="javascript" src="/applus/gp/page/Tabstrip.js"></SCRIPT>
+<SCRIPT language="javascript" src="/applus/gp/webpage/script/Grid_Hide_Lock.js"></SCRIPT>
+
+</head>
+
+<body onload="_oGrid_Hide_Lock.init();" background="/applus/img/main/bk.jpg">
+
+<table id="SortTabTable" border="0" width="37%" style="font-size: 9pt" height="61">
+  <tr>
+    <td width="33%" height="14">
+    源字段：
+    </td>
+    <td width="33%" height="14">
+    </td>
+    <td width="34%" height="14">
+    目标字段：
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" height="71"><select size="9" id="FromFieldSelect" style="width: 120; height: 200; font-size:9pt;" ondblclick="_oGrid_Hide_Lock.selectField();"></select></td>
+    <td width="33%" height="71"><input type="button" value=" -&gt; " id="SelectButton" style="border-width:1px" onclick="_oGrid_Hide_Lock.selectField();">
+    <br>
+    <br>
+    <input type="button" value=" &lt;- " id="ReselectButton" style="border-width:1px" onclick="_oGrid_Hide_Lock.ReselectField();">
+    </td>
+    <td width="34%" height="71"><select size="9" id="ToFieldSelect" style="width: 120; height: 200; font-size:9pt;" ondblclick="_oGrid_Hide_Lock.ReselectField();"></select></td>
+  </tr>
+  <tr>
+    <td width="100%" colspan="3" style="vertical-align: top; font-size:9pt;" height="1">
+    排序方向：<select size="1" id="SortDirection" style="font-size: 9pt">
+    <option selected value="true">升序</option>
+    <option value="false">降序</option>
+    </select>
+    </td>
+  </tr>
+</table>
+
+
+<div style="position:absolute; left:120; top:320; width:160; height:20">
+<input type="button" value=" 确定 " name="ok" style="font-size: 9pt; border-style: solid; border-width: 1" onclick="_oGrid_Hide_Lock.ok()">
+<input type="button" value=" 取消 " name="cancel" style="font-size: 9pt; border-style: solid; border-width: 1" onclick="_oGrid_Hide_Lock.cancel()">
+</div>
+</body>
+</html>
+

@@ -1,0 +1,48 @@
+<html>
+<title> Workflow Designer </title>
+<head>
+<SCRIPT LANGUAGE="Javascript">
+      var javawsInstalled = 0;
+      isIE = "false";
+      if (navigator.mimeTypes && navigator.mimeTypes.length) {
+         x = navigator.mimeTypes['application/x-java-jnlp-file'];
+         if (x) javawsInstalled = 1;
+      } else {
+         isIE = "true";
+      }
+
+      function insertLink(url, name) {
+       if (javawsInstalled) {
+            document.write("<br><br><br>  <a href=" + url 
+            + "><b>启动流程定义工具></b></a><br><br>");
+            //window.navigate("Proxy?function=webstart");
+            //window.close();
+         } else {
+            //document.write("Your browser doesn't support Java Web Start.Please install Java Web Start 1.4.2+ which is included in JRE 1.4.2+ .");
+            document.write("您的浏览器不支持Java Web Start.请安装Java Web Start 1.4.2或以上版本（包含于JRE 1.4.2或以上版本）");
+         }
+      }
+
+</SCRIPT>
+<SCRIPT LANGUAGE="VBScript">
+    on error resume next
+    If isIE = "true" Then
+      If Not(IsObject(CreateObject("JavaWebStart.IsInstalled"))) Then
+         javawsInstalled = 0
+      Else
+        javawsInstalled = 1
+      End If
+    End If
+</SCRIPT>
+<SCRIPT LANGUAGE="Javascript">
+    //if(javawsInstalled){
+     insertLink("../../conf/jawe.jnlp");
+	//}else{
+		
+    //}
+</SCRIPT>
+</head>
+<body>
+</body>
+</html>
+

@@ -1,0 +1,119 @@
+<!--
+作者： 刘明，李松
+
+-->
+<HTML>
+	<HEAD>
+		<TITLE>日期选择</TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=GBK">
+		<script languange="javascript">
+
+  var dObj=window.dialogArguments;//取当前选中日期
+
+  var nowSelect=dObj[0];
+  var dateType=dObj[1];
+  function fload(){
+    fPopCalendar(document.all.txt1, document.all.txt1);
+
+   if(dateType=="datetime" ){
+     var nowHour;
+     var nowMinus;
+
+    //打开时间窗口
+     timeA.style.display="";
+
+     var index=nowSelect.indexOf(" ");
+     var nDate=new Date();
+     var curHour=nDate.getHours();
+     var curMinus=nDate.getMinutes();
+
+        if(index==-1 || index==0){
+          nowHour=curHour;
+          nowMinus=curMinus;
+        }
+        else{
+          var timeStr=nowSelect.substring(index+1);
+          var times=timeStr.split(":");
+          if(times.length==2){
+              if(times[0].indexOf("0")==0 && times[0].length==2)
+                 times[0]=times[0].substring(1);
+
+              if(times[1].indexOf("0")==0 && times[1].length==2)
+                 times[1]=times[1].substring(1);
+
+             nowHour =parseInt(times[0]);
+             nowMinus=parseInt(times[1]);
+             //如果当前录入框内有一个非法时间，则自动将其改为当前客户端计算机时间
+             if( !( (nowHour>=0 && nowHour<=23) && (nowMinus>=0 && nowMinus<=59) )){
+               nowHour=curHour;
+               nowMinus=curMinus;
+             }
+
+          }
+          else{
+             nowHour=curHour;
+             nowMinus=curMinus;
+          }
+        };
+
+     if( (""+nowHour).length==1)
+           nowHour="0"+nowHour;
+     if( (""+nowMinus).length==1)
+           nowMinus="0"+nowMinus;
+    //alert(nowHour+","+nowMinus);
+//处理小时
+    var options=selhourA.options;
+    for(var i=0;i<24;i++){
+      var option= document.createElement("option");
+      var str=i>9?i:"0"+i;
+          option.value=str;
+          option.innerText=str;
+          options.appendChild(option);
+    }
+    selhourA.style.visibility = "visible";
+    selhourA.value=nowHour;
+    hourA.innerText=nowHour;
+    //alert(nowHour+","+selhourA.value);
+
+    //处理分钟
+     options=selminusA.options;
+    for(var i=0;i<60;i++){
+      var option= document.createElement("option");
+      var str=i>9?i:"0"+i;
+          option.value=str;
+          option.innerText=str;
+          options.appendChild(option);
+    }
+    selminusA.style.visibility = "visible";
+    selminusA.value=nowMinus;
+    minusA.innerText=nowMinus;
+   //alert(nowMinus+","+selminusA.value);
+
+   }
+   else{
+     timeA.style.display="none";
+     timeUser.innerText="";
+
+   }
+
+
+//    alert(selhourA.outerHTML);
+
+  }
+
+  function fkeydown(){
+    if(event.keyCode==27){
+      event.returnValue = null;
+      window.returnValue = null;
+      window.close();
+    }
+  }
+
+  document.onkeydown=fkeydown;
+		</script>
+		<SCRIPT src="calendar.js"></SCRIPT>
+	</HEAD>
+	<BODY bgColor="#91A9E3" onload="fload()">
+		<INPUT id="txt1" style="DISPLAY: none">
+	</BODY>
+</HTML>

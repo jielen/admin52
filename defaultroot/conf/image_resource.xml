@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root>
+<toolbar>
+<img name="add" src="style/img/gp5/ico/add_g.jpg" />
+<img name="fadd" src="style/img/gp5/ico/add_g.jpg" />
+<img name="new" src="style/img/gp5/ico/add_g.jpg" />
+<img name="fnew" src="style/img/gp5/ico/add_g.jpg" />
+<img name="fopen" src="style/img/gp5/ico/open_g.jpg" />
+<img name="open" src="style/img/gp5/ico/open_g.jpg" />
+<img name="fedit" src="style/img/gp5/ico/edit_g.jpg" />
+<img name="fcut" src="style/img/gp5/ico/cut_g.jpg" />
+<img name="fdelete" src="style/img/gp5/ico/delete_g.jpg" />
+<img name="save" src="style/img/gp5/ico/save_g.jpg" />
+<img name="fsave" src="style/img/gp5/ico/save_g.jpg" />
+<img name="help" src="style/img/gp5/ico/help_g.jpg" />
+<img name="fhelp" src="style/img/gp5/ico/help_g.jpg" />
+<img name="fexit" src="style/img/gp5/ico/exit_g.jpg" />
+<img name="exit" src="style/img/gp5/ico/exit_g.jpg" />
+<img name="finsert" src="style/img/gp5/ico/insert_g.jpg" />
+<img name="fcreate" src="style/img/gp5/ico/create_g.jpg" />
+<img name="fcreatevou" src="style/img/gp5/ico/create_g.jpg" />
+<img name="fpreview" src="style/img/gp5/ico/preview_g.jpg" />
+<img name="fprint" src="style/img/gp5/ico/print_g.jpg" />
+<img name="fimport" src="style/img/gp5/ico/import_g.jpg" />
+<img name="fexport" src="style/img/gp5/ico/export_g.jpg" />
+<img name="fdo" src="style/img/gp5/ico/do_g.jpg" />
+<img name="frun" src="style/img/gp5/ico/do_g.jpg" />
+<img name="faudit" src="style/img/gp5/ico/audit_g.jpg" />
+<img name="funaudit" src="style/img/gp5/ico/unaudit_g.jpg" />
+<img name="farchive" src="style/img/gp5/ico/archive_g.jpg" />
+<img name="fok" src="style/img/gp5/ico/ok_g.jpg" />
+<img name="fcancel" src="style/img/gp5/ico/cancel_g.jpg" />
+<img name="fcommit" src="style/img/gp5/ico/commit_g.jpg" />
+<img name="flock" src="style/img/gp5/ico/lock_g.jpg" />
+<img name="funlock" src="style/img/gp5/ico/unlock_g.jpg" />
+<img name="ffreeze" src="style/img/gp5/ico/freeze_g.jpg" />
+<img name="funfreeze" src="style/img/gp5/ico/unfreeze_g.jpg" />
+<img name="fundo" src="style/img/gp5/ico/undo_g.jpg" />
+<img name="fwatch" src="style/img/gp5/ico/watch_g.jpg" />
+<img name="fdesigner" src="style/img/gp5/ico/designer_g.jpg" />
+<img name="ffullscreen" src="style/img/gp5/ico/full_screen_g.jpg" />
+<img name="ffavorite" src="style/img/gp5/ico/favorite_g.jpg" />
+<img name="frecycle" src="style/img/gp5/ico/recycle_bin_g.jpg" />
+<img name="fcalendar" src="style/img/gp5/ico/calendar_g.jpg" />
+
+<img name="funtread" src="style/img/gp5/ico/untread_g.jpg" />
+<img name="fshowoption" src="style/img/gp5/ico/set_g.jpg" />
+<img name="fshowcomment" src="style/img/gp5/ico/attitude_g.jpg" />
+<img name="fcallback" src="style/img/gp5/ico/callback_g.jpg" />
+<img name="fmanualcommit" src="style/img/gp5/ico/manual_commit_g.jpg" />
+<img name="fhandover" src="style/img/gp5/ico/handover_g.jpg" />
+<img name="ftransfer" src="style/img/gp5/ico/transfer_g.jpg" />
+<img name="fautocommit" src="style/img/gp5/ico/auto_commit_g.jpg" />
+<img name="fnewcommit" src="style/img/gp5/ico/deliver_audit_g.jpg" />
+<img name="fshowinstancetrace" src="style/img/gp5/ico/show_instance_trace_g.jpg" />
+</toolbar>
+</root>
+

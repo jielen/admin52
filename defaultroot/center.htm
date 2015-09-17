@@ -1,0 +1,29 @@
+<LINK href="script/applus_new.css" rel="stylesheet" type="text/css">
+<script>
+function ImageChange(){
+  var imgSrc = document.getElementById("DownWin").src;
+  if(imgSrc.indexOf("centerleft.gif")>0){
+  	imgSrc = "/style/img/main/centerright.gif";
+  }else{
+  	imgSrc = "/style/img/main/centerleft.gif";
+  }
+	document.getElementById("DownWin").src = imgSrc;
+}
+function ChangeFrameSize(){
+	if(parent.index.cols=="177,9,*")
+	{
+		parent.index.cols="0,9,*";
+	}
+	else
+	{
+		parent.index.cols="177,9,*";
+	}
+}
+</script>
+<body>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="700px;" style="padding-top:220px; " valign="top" background="/style/img/main/centerbg.gif"><a href="#" onclick="javascript:ImageChange();javascript:ChangeFrameSize()"><img src="/style/img/main/centerleft.gif" width="9" height="48" border="0" name="DownWin"></a></td>
+  </tr>
+</table>
+</body>

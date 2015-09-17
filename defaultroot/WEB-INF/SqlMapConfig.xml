@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="false" enhancementEnabled="true"
+		lazyLoadingEnabled="false" errorTracingEnabled="true"
+		useStatementNamespaces="true" />
+		
+	<typeHandler jdbcType="CLOB" javaType="java.lang.String"
+		callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler" />
+		
+	<sqlMap resource="sqlmap/gmap-meta.xml" />
+	<sqlMap resource="sqlmap/gmap-common.xml" />
+	<sqlMap resource="sqlmap/gmap-user.xml" />
+	<sqlMap resource="sqlmap/gmap-priv.xml" />
+	<sqlMap resource="sqlmap/gmap-global.xml" />
+	<sqlMap resource="sqlmap/print-ruleData.xml" />
+	<sqlMap resource="sqlmap/gmap-menu.xml" />
+	<sqlMap resource="sqlmap/integrate-gocom.xml" />
+
+	<sqlMap resource="sqlmap/admin-listPage.xml" />
+	<sqlMap resource="sqlmap/admin-editPage.xml" />
+	<sqlMap resource="sqlmap/admin-selectPage.xml" />
+	<sqlMap resource="sqlmap/admin-ruleData.xml" />
+
+	<!-- for test -->
+	<sqlMap resource="sqlmap/test-listPage.xml" />
+
+</sqlMapConfig>

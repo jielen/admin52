@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	- Application context definition for JPetStore's business layer.
+	- Contains bean references to the transaction manager and to the DAOs in
+	- dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+	<!-- ========================= GENERAL DEFINITIONS ========================= -->
+	
+	<bean id="adminService" class="com.anyi.admin.access.AdminService" scope="prototype">
+	  <constructor-arg index="0">
+        <ref bean="baseDao"/>
+      </constructor-arg> 
+      <constructor-arg index="1">
+        <ref bean="serviceFacade"/>
+      </constructor-arg>   
+	</bean>
+	<bean id="articleService" class="com.anyi.admin.access.ArticleService" scope="prototype">
+        <property name="baseDao" ref="baseDao" />
+	</bean>
+	
+	<bean id="getAdminPath" class="com.anyi.gp.core.action.GetAdminPathAction" scope="prototype">
+		<property name="baseDAO" ref="baseDao" />
+  	</bean> 
+  	<bean id="savePrecolAction" class="com.anyi.admin.action.SavePrecolAction" scope="prototype"> 
+	</bean>
+	 <bean id="desktopBatch" class="com.anyi.admin.action.DesktopBatchAction" scope="prototype">
+         <property name="dao" ref="baseDao"/>
+     </bean>
+     <bean id="articleContent" class="com.anyi.admin.action.ArticleContentAction" scope="prototype"> 
+         <property name="articleService" ref="articleService"/>
+      </bean>
+      <bean id="saveArticle" class="com.anyi.admin.action.SaveArticleAction" scope="prototype">
+         <property name="articleService" ref="articleService"/>
+      </bean>
+      <bean id="deleteArticle" class="com.anyi.admin.action.DeleteArticleAction" scope="prototype">
+         <property name="articleService" ref="articleService"/>
+      </bean>
+      <bean id="carryBasicInformation" class="com.anyi.admin.action.CarryBasicInformationAction" scope="prototype"> 
+	  </bean>  
+	  <bean id="deleteRoleRelation" class="com.anyi.admin.action.DeleteRoleRelationAction" scope="prototype">
+         <property name="as" ref="adminService"/>
+      </bean>
+      <bean id="deleteEmpRelation" class="com.anyi.admin.action.DeleteEmpRelationAction" scope="prototype">
+         <property name="as" ref="adminService"/>
+      </bean>
+      <bean id="delGroupRelation" class="com.anyi.admin.action.DelGroupRelationAction" scope="prototype">
+         <property name="as" ref="adminService"/>
+      </bean>
+      <bean id="publishArticle" class="com.anyi.admin.action.PublishArticleAction" scope="prototype">
+         <property name="articleService" ref="articleService"/>
+      </bean>
+       <bean id="resourceDeleteAction" class="com.anyi.admin.action.ResourceDeleteAction" scope="prototype">
+			<property name="service" ref="fileService" />
+	  </bean>
+	   <bean id="saveAsCa" class="com.anyi.admin.action.SaveAsCaAction"
+			scope="prototype">
+			<property name="serviceFacade" ref="serviceFacade" />
+		</bean>
+	  <bean id="upgradeKeyInfoAction" class="com.anyi.admin.action.UpgradeKeyInfoAction" scope="prototype">
+	  </bean>
+	  <bean id="getServerInfoAction" class="com.anyi.admin.action.GetServerInfoAction">
+	  </bean>
+	  
+     <aop:config>
+		<aop:pointcut id="adminServiceRun"	expression="execution(* com.anyi.admin.access.AdminService.*(..))" />		
+		<aop:advisor pointcut-ref="adminServiceRun" advice-ref="txAdvice" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="articleServiceRun"	expression="execution(* com.anyi.admin.access.ArticleService.*(..))" />		
+		<aop:advisor pointcut-ref="articleServiceRun" advice-ref="txAdvice" />
+	</aop:config>
+</beans>

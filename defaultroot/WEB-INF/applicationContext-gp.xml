@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	- Application context definition for JPetStore's business layer.
+	- Contains bean references to the transaction manager and to the DAOs in
+	- dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<bean id="beanPool" class="com.anyi.gp.pub.BeanPool">
+		<constructor-arg index="0">
+			<ref bean="baseDao" />
+		</constructor-arg>
+	</bean>
+	<bean id="dbSupport" class="com.anyi.gp.access.OracleSupport">
+	</bean>
+	<bean id="commonService" class="com.anyi.gp.access.CommonService"
+		scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="baseDao" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="dbSupport" />
+		</constructor-arg>
+	</bean>
+	<bean id="workflowService"
+		class="com.anyi.gp.access.WorkflowService" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="dbSupport" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="myDataSource" />
+		</constructor-arg>
+	</bean>
+	<bean id="printService" class="com.anyi.gp.access.PrintService"
+		scope="prototype">
+	</bean>
+	<bean id="fileService" class="com.anyi.gp.access.FileService"
+		scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="baseDao" />
+		</constructor-arg>
+	</bean>
+	<bean id="serviceFacade" class="com.anyi.gp.pub.ServiceFacade"
+		scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="commonService" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="workflowService" />
+		</constructor-arg>
+		<constructor-arg index="2">
+			<ref bean="printService" />
+		</constructor-arg>
+	</bean>
+	<bean id="rowManager"
+		class="com.anyi.gp.persistence.RowManagerSupport" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="myDataSource" />
+		</constructor-arg>
+	</bean>
+	<bean id="autoNum" class="com.anyi.gp.pub.AutoNum"
+		scope="prototype">
+	</bean>
+	<bean id="save" class="com.anyi.gp.core.action.SaveAction"
+		scope="prototype">
+		<property name="serviceFacade" ref="serviceFacade" />
+	</bean>
+	<bean id="authenticator"
+		class="com.anyi.gp.sso.support.UserPwdAuthenticator"
+		scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="sessionBuilder"
+		class="com.anyi.gp.sso.support.SessionContextBuilderSupport"
+		scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="loginAction" class="com.anyi.gp.domain.action.LoginAction" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="authenticator" />
+		</constructor-arg>
+	</bean>
+	<bean id="dispatcherAction" class="com.anyi.gp.domain.action.DispatcherAction" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="sessionBuilder" />
+		</constructor-arg>
+		<property name="licenseManager" ref="licenseManager"/>
+	</bean>
+	<bean id="rightService" class="com.anyi.gp.domain.RightService"
+		scope="prototype">
+	</bean>
+	<bean id="getPrivTreeAction"
+		class="com.anyi.gp.domain.action.GetPrivTreeAtion"
+		scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="savePrivAction"
+		class="com.anyi.gp.domain.action.SavePrivAction" scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="saveNumPrivAction"
+		class="com.anyi.gp.domain.action.SaveNumPrivAction"
+		scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="grantService" class="com.anyi.gp.domain.GrantService"
+		scope="prototype">
+	</bean>
+	<bean id="queryGrant"
+		class="com.anyi.gp.domain.action.QueryGrantAction"
+		scope="prototype">
+		<property name="service" ref="grantService" />
+	</bean>
+	<bean id="savePassword"
+		class="com.anyi.gp.domain.action.SavePasswordAction"
+		scope="prototype">
+	</bean>
+	<bean id="saveSession"
+		class="com.anyi.gp.domain.action.SaveSessionAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="pageDataProvider"
+		class="com.anyi.gp.access.PageDataProvider" scope="prototype">
+		<property name="dao" ref="baseDao" />
+		<property name="support" ref="dbSupport" />
+	</bean>
+	<bean id="selectPageAction"
+		class="com.anyi.gp.core.action.SelectPageAction" scope="prototype">
+		<property name="provider" ref="pageDataProvider" />
+	</bean>
+	<bean id="listPageAction"
+		class="com.anyi.gp.core.action.ListPageAction" scope="prototype">
+		<property name="provider" ref="pageDataProvider" />
+	</bean>
+	<bean id="pageDispatcherAction"
+		class="com.anyi.gp.core.action.PageDispatcherAction"
+		scope="prototype">
+	</bean>
+	<bean id="savePropAction"
+		class="com.anyi.gp.core.action.SavePropAction" scope="prototype">
+	</bean>
+	<bean id="getGridHeadTable"
+		class="com.anyi.gp.core.action.GetHeadTableAction"
+		scope="prototype">
+	</bean>
+	<bean id="deletePropAction"
+		class="com.anyi.gp.core.action.DeletePropAction" scope="prototype">
+	</bean>
+	<bean id="compoMetaBuilder"
+		class="com.anyi.gp.meta.CompoMetaBuilder" scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="tableMetaBuilder"
+		class="com.anyi.gp.meta.TableMetaBuilder" scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="getSchemaStatusAction"
+		class="com.anyi.gp.core.action.GetSchemaStatusAction"
+		scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="saveSchemaAction"
+		class="com.anyi.gp.core.action.SaveSchemaAction" scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="loadSchemaAction"
+		class="com.anyi.gp.core.action.LoadSchemaAction" scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="deleteSchemaAction"
+		class="com.anyi.gp.core.action.DeleteSchemaAction"
+		scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="getMenuTree"
+		class="com.anyi.gp.desktop.action.GetMenuTreeAction"
+		scope="prototype">
+		<constructor-arg>
+			<bean class="com.anyi.gp.desktop.MenuTreeBuilder" />
+		</constructor-arg>
+	</bean>
+	<bean id="exportToReport"
+		class="com.anyi.gp.core.action.ExportToReportAction"
+		scope="prototype">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+	<!--add by guoh-->
+	<bean id="getOptions"
+		class="com.anyi.gp.core.action.GetOptionsAction" scope="prototype">
+	</bean>
+
+	<bean id="saveOptions"
+		class="com.anyi.gp.core.action.SaveOptionsAction" scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+
+	<bean id="addItemAction"
+		class="com.anyi.gp.desktop.action.AddItemAction" scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+
+	<bean id="fileUploadAction"
+		class="com.anyi.gp.core.action.FileUploadAction" scope="prototype">
+		<property name="service" ref="fileService" />
+	</bean>
+	
+	<bean id="fileDownloadAction"
+		class="com.anyi.gp.core.action.FileDownloadAction"
+		scope="prototype">
+		<property name="service" ref="fileService" />
+	</bean>
+	<bean id="fileDeleteAction"
+		class="com.anyi.gp.core.action.FileDeleteAction" scope="prototype">
+		<property name="service" ref="fileService" />
+	</bean>
+	<bean id="download" class="com.anyi.gp.core.action.DownloadAction"  scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="resourceUploadAction"	class="com.anyi.gp.core.action.ResourceUploadAction" scope="prototype">
+			<property name="service" ref="fileService" />
+	</bean>
+	<bean id="getRuleDeltaAction"
+		class="com.anyi.gp.core.action.GetRuleDeltaAction"
+		scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="getRuleDataAction"
+		class="com.anyi.gp.core.action.GetRuleDataAction" scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="psdModiTimeAction"
+		class="com.anyi.gp.core.action.PsdModiTimeAction" scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="logoutAction" class="com.anyi.gp.core.action.LogoutAction"
+		scope="prototype">
+		<property name="service" ref="commonService" />
+	</bean>
+	<bean id="getLanTransAction"
+		class="com.anyi.gp.core.action.GetLanTransAction" scope="prototype">
+	</bean>
+	<bean id="roleCopyAction"
+		class="com.anyi.gp.domain.action.CopyRolePrivAction"
+		scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="empCopyAction"
+		class="com.anyi.gp.domain.action.CopyEmpPrivAction"
+		scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="editPageAction"
+		class="com.anyi.gp.core.action.EditPageAction" scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="getTreeRowSet"
+		class="com.anyi.gp.core.action.GetTreeRowSetAction"
+		scope="prototype">
+		<property name="baseDAO" ref="baseDao" />
+	</bean>
+	<bean id="getDigestAction"
+		class="com.anyi.gp.core.action.GetDigestAction" scope="prototype">
+		<property name="provider" ref="pageDataProvider" />
+	</bean>
+	<bean id="getTopMenuAction"
+		class="com.anyi.gp.desktop.action.GetGroupTitleAction"
+		scope="prototype">
+	</bean>
+	<bean id="updateGroupPageAction"
+		class="com.anyi.gp.desktop.action.UpdatePageAction"
+		scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="updateMenuTreeAction"
+		class="com.anyi.gp.desktop.action.UpdateMenuTreeAction"
+		scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="exportExcelData"
+		class="com.anyi.gp.core.action.ExportExcelDataAction"
+		scope="prototype">
+	</bean>
+	<bean id="publishView"
+		class="com.anyi.gp.core.action.PublishViewAction" scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="expMenuInfoAction"
+		class="com.anyi.gp.desktop.action.ExpMenuInfoAction"
+		scope="prototype">
+	</bean>
+	<bean id="impMenuInfoAction"
+		class="com.anyi.gp.desktop.action.ImpMenuInfoAction"
+		scope="prototype">
+		<property name="dao" ref="baseDao" />
+	</bean>
+
+	<bean id="licenseService"
+		class="com.anyi.gp.license.LicenseService">
+		<property name="dao" ref="baseDao" />
+	</bean>
+	<bean id="socketCommunication"
+		class="com.anyi.gp.license.SocketCommunication" scope="prototype">
+	</bean>
+	<bean id="licenseManager"
+		class="com.anyi.gp.license.LicenseManager">
+		<constructor-arg index="0">
+			<ref bean="licenseService" />
+		</constructor-arg>
+	</bean>
+	<bean id="uploadLicense"
+		class="com.anyi.gp.core.action.UploadLicenseAction"
+		scope="prototype">
+		<property name="manager" ref="licenseManager" />
+	</bean>
+
+	<bean id="checkRegisterAction"
+		class="com.anyi.gp.core.action.CheckRegisterAction">
+		<property name="manager" ref="licenseManager" />
+	</bean>
+
+<!-- 
+	<bean id="upgradeTools" class="com.anyi.gp.pub.UpgradeTools">
+		<constructor-arg index="0">
+			<ref bean="baseDao" />
+		</constructor-arg>
+	</bean>
+ -->
+	<bean id="groupCopyAction"
+		class="com.anyi.gp.domain.action.GroupCopyAction" scope="prototype">
+		<property name="service" ref="rightService" />
+	</bean>
+	<bean id="createKeyAction"
+		class="com.anyi.gp.core.action.CreateKeyAction" scope="prototype">
+	</bean>
+	
+	<bean id="getPeriodAction"
+		class="com.anyi.gp.core.action.GetPeriodAction"
+		scope="prototype">
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="rowManagerRun"
+			expression="execution(* com.anyi.gp.persistence.RowManagerSupport.*(..))" />
+		<aop:pointcut id="workflowServiceRun"
+			expression="execution(* com.anyi.gp.access.WorkflowService.*(..))" />
+		<aop:pointcut id="printServiceRun"
+			expression="execution(* com.anyi.gp.access.PrintService.*(..))" />
+		<aop:pointcut id="commonServiceRun"
+			expression="execution(* com.anyi.gp.access.CommonService.*(..))" />
+		<aop:pointcut id="rightServiceRun"
+			expression="execution(* com.anyi.gp.domain.RightService.*(..))" />
+		<aop:pointcut id="grantServiceRun"
+			expression="execution(* com.anyi.gp.domain.GrantService.*(..))" />
+
+		<aop:advisor pointcut-ref="rowManagerRun" advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="workflowServiceRun"
+			advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="printServiceRun"
+			advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="commonServiceRun"
+			advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="rightServiceRun"
+			advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="grantServiceRun"
+			advice-ref="txAdvice" />
+
+	</aop:config>
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="fileServiceRun"
+			expression="execution(* com.anyi.gp.access.FileService.*(..))" />
+		<aop:advisor pointcut-ref="fileServiceRun"
+			advice-ref="txAdvice" />
+	</aop:config>
+</beans>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root>
+  <conf-files>
+    <item file="/conf/BusinessConfig-as.xml" />
+    <item file="/conf/BusinessConfig-ma.xml" />
+
+
+  </conf-files>
+</root>
+

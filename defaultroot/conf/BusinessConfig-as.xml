@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root>
+  <basic-information-carray-forward>
+    <table name="as_org" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="as_emp_position" ndfield="ND" uidfields="" exceptfields="" />
+    <table name="as_wf_business_superior" ndfield="ND" uidfields="ID" exceptfields="" />
+    <table name="WF_EXECUTOR_SOURCE" ndfield="EXTND" uidfields="" exceptfields="" />    
+    <table name="as_org_position" ndfield="ND" uidfields="" exceptfields="" >
+      <after type="uid-rela" selfuidfield="ORG_POSI_ID" parentuidfield="LEADER_POSI_ID" />
+    </table>
+  </basic-information-carray-forward>
+</root>
+

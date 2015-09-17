@@ -1,0 +1,6 @@
+/*
+  µã»÷"°ïÖú"°´Å¥¡±
+*/
+function fhelp(){
+	PageX.showHelp();
+}
